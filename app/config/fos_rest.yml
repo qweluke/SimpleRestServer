@@ -1,0 +1,32 @@
+fos_rest:
+    disable_csrf_role: ROLE_API
+    routing_loader:
+        default_format: json
+        include_format: true
+    param_fetcher_listener: force
+    body_listener:
+        array_normalizer:
+            service: fos_rest.normalizer.camel_keys
+            forms: true
+    allowed_methods_listener: true
+    access_denied_listener:
+        # all requests using the 'json' format will return a 403 on an access denied violation
+        json: true
+    serializer:
+        serialize_null: true
+    view:
+        view_response_listener: 'force'
+        exception_wrapper_handler: CoreBundle\Handler\ExceptionWrapperHandler
+        formats:
+            json: true
+    exception:
+        enabled: true
+        messages:
+            Symfony\Component\HttpKernel\Exception\BadRequestHttpException: true
+            Symfony\Component\HttpKernel\Exception\NotFoundHttpException: true
+    service:
+        exception_handler:    fos_rest.view.exception_wrapper_handler
+    format_listener:
+        rules:
+            - { path: '^/api', priorities: ['json'], fallback_format: json, prefer_extension: true }
+            - { path: '^/', priorities: ['html'], fallback_format: ~, prefer_extension: true }
