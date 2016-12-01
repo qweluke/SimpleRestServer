@@ -16,9 +16,11 @@ REST server
 
 #####How to start:
 - clone this repo
+- run `composer install` to install necessary dependencies
 - run `php bin/console server:start 0.0.0.0:8000`
 - go to [http://localhost:8000/dev/doc](http://localhost:8000/dev/doc) to see documentation
 
+If you are having any permissions problems please follow [this](http://symfony.com/doc/current/setup/file_permissions.html).
 
 What you can:
 
