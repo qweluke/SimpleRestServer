@@ -15,7 +15,8 @@ trait Timestampable
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      * @Expose
-     * @JMS\Groups({"user","mod","admin"})
+     * @JMS\Type("DateTime<'Y-m-d'>")
+     * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      */
     protected $createdAt;
 
@@ -26,7 +27,8 @@ trait Timestampable
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      * @Expose
-     * @JMS\Groups({"mod","admin"})
+     * @JMS\Type("DateTime<'Y-m-d'>")
+     * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      */
     protected $updatedAt;
 

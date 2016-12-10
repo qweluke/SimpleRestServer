@@ -108,6 +108,7 @@ class User extends BaseUser
      * Contains user roles
      *
      * @Expose
+     * @JMS\Type("array<string, string>")
      * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      */
     protected $roles;
@@ -161,6 +162,7 @@ class User extends BaseUser
      *
      * @Expose
      * @JMS\Groups({"ROLE_ADMIN"})
+     * @JMS\Type("DateTime<'Y-m-d'>")
      * @Assert\Date()
      * @ORM\Column(type="date", nullable=true)
      */
