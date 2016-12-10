@@ -3,6 +3,7 @@
 namespace CoreBundle\Form\User;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,6 +24,9 @@ class EditType extends AbstractType
             ])
             ->add('lastName', TextType::class, [
                 'required' => false
+            ])
+            ->add('birthDate', DateType::class, [
+                'required' => false,
             ])
             ->add('gender', ChoiceType::class, [
                 'required' => false,

@@ -3,6 +3,7 @@
 namespace CoreBundle\Form\User;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTypee;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,6 +31,9 @@ class EditUserAdminType extends AbstractType
             ->add('gender', ChoiceType::class, [
                 'required' => false,
                 'choices' => array('male', 'female'),
+            ])
+            ->add('birthDate', DateType::class, [
+                'required' => false,
             ])
             ->add('roles', ChoiceType::class, [
                 'required' => false,

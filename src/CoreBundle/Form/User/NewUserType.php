@@ -3,6 +3,7 @@
 namespace CoreBundle\Form\User;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -31,6 +32,9 @@ class NewUserType extends AbstractType
                 'required' => true,
                 'choices' => array('male', 'female'),
             ])
+            ->add('birthDate', DateType::class, [
+                'required' => false,
+            ])
             ->add('roles', ChoiceType::class, [
                 'required' => true,
                 'multiple' => true,
@@ -56,7 +60,8 @@ class NewUserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'CoreBundle\Entity\User'
+            'data_class' => 'CoreBundle\Entity\User',
+            'allow_extra_fields' => true
         ));
     }
 

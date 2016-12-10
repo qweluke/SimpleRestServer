@@ -157,6 +157,16 @@ class User extends BaseUser
     protected $gender;
 
     /**
+     * User gender.
+     *
+     * @Expose
+     * @JMS\Groups({"ROLE_ADMIN"})
+     * @Assert\Date()
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $birthDate;
+
+    /**
      * Set firstName
      *
      * @param string $firstName
