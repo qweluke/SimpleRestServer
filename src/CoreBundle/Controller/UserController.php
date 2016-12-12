@@ -176,17 +176,14 @@ class UserController extends BaseController
      */
     public function showAction(User $user)
     {
+
         $view = View::create()
             ->setSerializationContext(SerializationContext::create()
                 ->setGroups($this->getUser()->getRoles())
             )
             ->setData($user);
 
-        $serializer = (new SerializerBuilder())->create()->build();
-        return $serializer->serialize($user, 'json');
-
         return $this->handleView($view);
-
     }
 
     /**
