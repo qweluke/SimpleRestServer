@@ -12,6 +12,7 @@ use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation as JMS;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\Entity(repositoryClass="CoreBundle\Entity\Repository\UserRepository")
@@ -108,6 +109,7 @@ class User extends BaseUser
      * Contains user roles
      *
      * @Expose
+     * @Accessor(getter="getRoles",setter="setRoles")
      * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      */
     protected $roles;
