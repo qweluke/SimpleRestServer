@@ -4,6 +4,7 @@ namespace CoreBundle\Controller;
 
 use CoreBundle\Form as Forms;
 use FOS\RestBundle\View\View;
+use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -180,6 +181,9 @@ class UserController extends BaseController
                 ->setGroups($this->getUser()->getRoles())
             )
             ->setData($user);
+
+        $serializer = (new SerializerBuilder())->create()->build();
+        return $serializer->serialize($user, 'json');
 
         return $this->handleView($view);
 
