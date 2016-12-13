@@ -3,7 +3,7 @@
 namespace CoreBundle\Form\User;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTypee;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -48,12 +48,11 @@ class EditUserAdminType extends AbstractType
             ])
             ->add('enabled', ChoiceType::class, [
                 'description' => 'Set 1 for true, 0 for false',
-                'choices' => array('1','0'),
+                'choices' => array('1', '0'),
                 'required' => false,
-            ])
-        ;
+            ]);
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

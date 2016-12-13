@@ -23,3 +23,4 @@ parameters:
     jwt_public_key_path:  '%kernel.root_dir%/../var/jwt/public.pem'    # ssh public key path
     jwt_key_pass_phrase:  ''                                           # ssh key pass phrase
     jwt_token_ttl:        3600
+    images_directory: '%kernel.root_dir%/../web/uploads/images/'

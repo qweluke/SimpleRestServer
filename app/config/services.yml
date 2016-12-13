@@ -36,3 +36,7 @@ services:
     rest.login.handler.authentication_success:
         class:     CoreBundle\Security\AuthenticationSuccessHandler
         arguments: ['@lexik_jwt_authentication.jwt_manager', '@event_dispatcher']
+
+    app.images_uploader:
+        class: CoreBundle\Utils\FileUploader
+        arguments: ['%images_directory%']
