@@ -2,6 +2,7 @@
 
 namespace CoreBundle\Entity;
 
+use CoreBundle\Traits\Bleamable;
 use CoreBundle\Traits\Timestampable;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -31,6 +32,7 @@ class Company
      */
     use SoftDeleteableEntity;
     use Timestampable;
+    use Bleamable;
 
     /**
      * @ORM\Id

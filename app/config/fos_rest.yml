@@ -1,5 +1,5 @@
 fos_rest:
-    disable_csrf_role: ROLE_API
+    disable_csrf_role: ROLE_USER
     routing_loader:
         default_format: json
         include_format: true

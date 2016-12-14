@@ -37,6 +37,14 @@ services:
         class:     CoreBundle\Security\AuthenticationSuccessHandler
         arguments: ['@lexik_jwt_authentication.jwt_manager', '@event_dispatcher']
 
+
+
     app.images_uploader:
         class: CoreBundle\Utils\FileUploader
         arguments: ['%images_directory%']
+
+    form.type.user:
+        class: CoreBundle\Form\UserType
+        arguments: ["@security.authorization_checker"]
+        tags:
+            - { name: form.type, alias: user_type }

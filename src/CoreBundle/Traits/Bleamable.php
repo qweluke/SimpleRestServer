@@ -2,9 +2,10 @@
 
 namespace CoreBundle\Traits;
 
+use CoreBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
-use UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Expose;
 
 trait Bleamable
 {
@@ -12,16 +13,20 @@ trait Bleamable
      * @var User
      *
      * @Gedmo\Blameable(on="create")
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\User")
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     * @Expose
+     * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      */
     protected $createdBy;
 
     /**
      * @var User
      * @Gedmo\Blameable(on="update")
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\User")
      * @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
+     * @Expose
+     * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      */
     protected $updatedBy;
 

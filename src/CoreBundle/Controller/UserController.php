@@ -98,9 +98,16 @@ class UserController extends BaseController
      *  resource="/api/content/",
      *  description="Creates new user",
      *
-     *  input={
-     *     "class"="CoreBundle\Form\User\NewUserType",
-     *      "name"=""
+     *  parameters={
+     *      {"name"="username", "dataType"="string", "description"="User login", "required"="true"},
+     *      {"name"="email", "dataType"="string", "description"="User email", "required"="true"},
+     *      {"name"="firstName", "dataType"="string", "description"="First name", "required"="true"},
+     *      {"name"="lastName", "dataType"="string", "description"="Last name", "required"="true"},
+     *      {"name"="plainPassword", "dataType"="string", "description"="User plain password", "required"="true"},
+     *      {"name"="enabled", "dataType"="boolean", "description"="Default value is 0", "format"="(1|0)", "required"="false"},
+     *      {"name"="gender", "dataType"="string", "description"="Gender", "format"="(male|female)", "required"="true"},
+     *      {"name"="birthDate", "dataType"="string", "description"="Birth date", "format"="YYYY-MM-DD", "required"="false"},
+     *      {"name"="roles[]", "dataType"="Array", "description"="Array of roles", "format"="(user|admin)", "required"="false"},
      *  },
      *
      *  output={
@@ -121,14 +128,13 @@ class UserController extends BaseController
             );
 
         $user = new User();
-        $form = $this->createForm(Forms\User\NewUserType::class, $user);
+        $form = $this->createForm(Forms\UserType::class, $user);
         $form->submit($request->request->all());
 
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $user->addRole('ROLE_API');
             $em->persist($user);
             $em->flush();
 
@@ -208,9 +214,16 @@ class UserController extends BaseController
      *  resource="/api/user/",
      *  description="Updates content data",
      *
-     *  input={
-     *     "class"="CoreBundle\Form\User\EditUserAdminType",
-     *      "name"=""
+     *  parameters={
+     *      {"name"="username", "dataType"="string", "description"="User login", "required"=""},
+     *      {"name"="email", "dataType"="string", "description"="User email", "required"=""},
+     *      {"name"="firstName", "dataType"="string", "description"="First name", "required"=""},
+     *      {"name"="lastName", "dataType"="string", "description"="Last name", "required"=""},
+     *      {"name"="plainPassword", "dataType"="string", "description"="User plain password", "required"=""},
+     *      {"name"="enabled", "dataType"="boolean", "description"="Default value is 0", "format"="(1|0)", "required"=""},
+     *      {"name"="gender", "dataType"="string", "description"="Gender", "format"="(male|female)", "required"=""},
+     *      {"name"="birthDate", "dataType"="string", "description"="Birth date", "format"="YYYY-MM-DD", "required"=""},
+     *      {"name"="roles[]", "dataType"="Array", "description"="Array of roles", "format"="(user|admin)", "required"=""},
      *  },
      *
      *  output={
@@ -227,7 +240,7 @@ class UserController extends BaseController
                 ->setGroups($this->getUser()->getRoles())
             );
 
-        $editForm = $this->createForm(Forms\User\EditUserAdminType::class, $user);
+        $editForm = $this->createForm(Forms\UserType::class, $user);
         $editForm->submit($request->request->all(), false);
 
 
@@ -251,7 +264,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Update current user data.
+     * Update logged user data.
      *
      * @Rest\Patch( "/" )
      *
@@ -270,9 +283,13 @@ class UserController extends BaseController
      *  resource="/api/user/",
      *  description="Update current user data",
      *
-     *  input={
-     *     "class"="CoreBundle\Form\User\EditType",
-     *      "name"=""
+     *  parameters={
+     *      {"name"="email", "dataType"="string", "description"="User email", "required"=""},
+     *      {"name"="firstName", "dataType"="string", "description"="First name", "required"=""},
+     *      {"name"="lastName", "dataType"="string", "description"="Last name", "required"=""},
+     *      {"name"="plainPassword", "dataType"="string", "description"="User plain password", "required"=""},
+     *      {"name"="gender", "dataType"="string", "description"="Gender", "format"="(male|female)", "required"=""},
+     *      {"name"="birthDate", "dataType"="string", "description"="Birth date", "format"="YYYY-MM-DD", "required"=""},
      *  },
      *
      *  output={
@@ -292,7 +309,7 @@ class UserController extends BaseController
         /** @var $user User */
         $user = $this->getUser();
 
-        $editForm = $this->createForm(Forms\User\EditType::class, $user);
+        $editForm = $this->createForm(Forms\UserType::class, $user);
         $editForm->submit($request->request->all(), false);
 
 
