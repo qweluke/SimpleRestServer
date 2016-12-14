@@ -10,4 +10,29 @@ namespace CoreBundle\Entity\Repository;
  */
 class CompanyRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function search(array $query = [])
+    {
+
+        $rows = $this->getEntityManager()->createQueryBuilder()
+            ->select('c')
+            ->from('CoreBundle:Company', 'c');
+
+        if (!empty($query['query'])) {
+            $rows->orWhere('c.name like :query')
+                ->orWhere('c.description like :query')
+                ->setParameter('query', '%' . $query['query'] . '%');
+        }
+
+        if (isset($query['orderBy']) && is_array($query['orderBy'])) {
+            foreach ($query['orderBy'] as $orderBy) {
+                if (preg_match('/^(id|name|createdAt|updatedAt) (ASC|DESC)/', $orderBy)) {
+                    list($column, $dir) = explode(' ', $orderBy);
+                    $rows->addOrderBy('u.' . $column, $dir);
+                }
+            }
+        }
+
+
+        return $rows->getQuery()->getResult();
+    }
 }

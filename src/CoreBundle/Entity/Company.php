@@ -21,8 +21,6 @@ use JMS\Serializer\Annotation\Accessor;
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ExclusionPolicy("all")
  *
- * @UniqueEntity("username")
- * @UniqueEntity("email")
  */
 class Company
 {
@@ -64,7 +62,6 @@ class Company
      * )
      *
      * @Expose
-     * @Assert\NotBlank()
      * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      * @ORM\Column(type="string", nullable=true)
      */

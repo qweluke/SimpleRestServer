@@ -104,7 +104,7 @@ class Contact
     protected $company;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\Image(
      *     allowLandscape = false,
      *     allowPortrait = false
