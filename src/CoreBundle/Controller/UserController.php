@@ -339,7 +339,7 @@ class UserController extends BaseController
      * @Security("has_role('ROLE_ADMIN')")
      * @Rest\Delete( "/{user}", requirements={"user" = "\d+"} )
      *
-     * @Rest\View(serializerGroups={"user","mod","admin"})
+     * @Rest\View(serializerGroups={"ROLE_USER","ROLE_ADMIN"})
      * @param Request $request
      * @param User $user
      * @return View

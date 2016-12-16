@@ -27,7 +27,7 @@ class CompanyRepository extends \Doctrine\ORM\EntityRepository
             foreach ($query['orderBy'] as $orderBy) {
                 if (preg_match('/^(id|name|createdAt|updatedAt) (ASC|DESC)/', $orderBy)) {
                     list($column, $dir) = explode(' ', $orderBy);
-                    $rows->addOrderBy('u.' . $column, $dir);
+                    $rows->addOrderBy('c.' . $column, $dir);
                 }
             }
         }
