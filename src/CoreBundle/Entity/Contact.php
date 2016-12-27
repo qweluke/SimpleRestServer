@@ -95,11 +95,8 @@ class Contact
     protected $jobTitle;
 
     /**
-     * @ORM\ManyToMany(targetEntity="CoreBundle\Entity\Company", inversedBy="contacts", cascade={"persist"})
-     * @ORM\JoinTable(name="company_contacts",
-     *  joinColumns={@ORM\JoinColumn(name="contact", referencedColumnName="id")},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="company", referencedColumnName="id")}
-     * )
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Company")
+     * @ORM\JoinColumn(name="company", referencedColumnName="id")
      */
     protected $company;
 
@@ -303,39 +300,6 @@ class Contact
         return $this->visibleAll;
     }
 
-    /**
-     * Add company
-     *
-     * @param \CoreBundle\Entity\Company $company
-     *
-     * @return Contact
-     */
-    public function addCompany(\CoreBundle\Entity\Company $company)
-    {
-        $this->company[] = $company;
-
-        return $this;
-    }
-
-    /**
-     * Remove company
-     *
-     * @param \CoreBundle\Entity\Company $company
-     */
-    public function removeCompany(\CoreBundle\Entity\Company $company)
-    {
-        $this->company->removeElement($company);
-    }
-
-    /**
-     * Get company
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCompany()
-    {
-        return $this->company;
-    }
 
     /**
      * Set image
@@ -359,5 +323,29 @@ class Contact
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set company
+     *
+     * @param \CoreBundle\Entity\Company $company
+     *
+     * @return Contact
+     */
+    public function setCompany(\CoreBundle\Entity\Company $company = null)
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * Get company
+     *
+     * @return \CoreBundle\Entity\Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
     }
 }

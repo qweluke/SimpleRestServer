@@ -60,11 +60,10 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 ;
 
 
-            foreach ($companyContactArr['companyTitle'] as $companyName) {
+
                 /** @var $addedBy User */
-                $company = $companyRepo->findOneBy(['name' => $companyName]);
+                $company = $companyRepo->findOneBy(['name' => $companyContactArr['companyTitle']]);
                 $company->addContact($contact);
-            }
 
 
             $manager->persist($contact);
@@ -80,7 +79,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
     {
         $list = [
             [
-                'companyTitle' => ['Orange'],
+                'companyTitle' => 'Orange',
                 'firstName' => 'Tomas',
                 'lastName' => 'Hikaru',
                 'jobTitle' => 'Director',
@@ -90,7 +89,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'createdBy' => 'root',
             ],
             [
-                'companyTitle' => ['Orange'],
+                'companyTitle' => 'Orange',
                 'firstName' => 'Juliette',
                 'lastName' => 'Venegaas',
                 'jobTitle' => 'Sales Director',
@@ -100,7 +99,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'createdBy' => 'root',
             ],
             [
-                'companyTitle' => ['UPC'],
+                'companyTitle' => 'UPC',
                 'firstName' => 'Simon',
                 'lastName' => 'Boyd',
                 'jobTitle' => 'Owner',
@@ -110,7 +109,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'createdBy' => 'user1',
             ],
             [
-                'companyTitle' => ['UPC'],
+                'companyTitle' => 'UPC',
                 'firstName' => 'Eve',
                 'lastName' => 'Fist',
                 'jobTitle' => null,
@@ -120,7 +119,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'createdBy' => 'user1',
             ],
             [
-                'companyTitle' => ['UPC'],
+                'companyTitle' => 'UPC',
                 'firstName' => 'Beata',
                 'lastName' => 'Iron',
                 'jobTitle' => 'Billing specialist',
@@ -130,7 +129,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'createdBy' => 'user1',
             ],
             [
-                'companyTitle' => ['Zanox', 'UPC', 'Polcode'],
+                'companyTitle' => 'Zanox',
                 'firstName' => 'Violetta',
                 'lastName' => 'Carma',
                 'jobTitle' => 'Billing specialist',
@@ -140,7 +139,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'createdBy' => 'user2',
             ],
             [
-                'companyTitle' => ['Polcode'],
+                'companyTitle' => 'Polcode',
                 'firstName' => 'Olga',
                 'lastName' => 'Mikrofalov',
                 'jobTitle' => 'Economy specialist',
@@ -150,7 +149,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'createdBy' => 'user3',
             ],
             [
-                'companyTitle' => ['Polcode'],
+                'companyTitle' => 'Polcode',
                 'firstName' => 'Jajami',
                 'lastName' => 'Omate',
                 'jobTitle' => 'HelpDesk engineer',
@@ -160,7 +159,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'createdBy' => 'user3',
             ],
             [
-                'companyTitle' => ['Polcode'],
+                'companyTitle' => 'Polcode',
                 'firstName' => 'Leyla',
                 'lastName' => 'Moore',
                 'jobTitle' => 'HelpDesk engineer',
@@ -170,7 +169,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'createdBy' => 'user3',
             ],
             [
-                'companyTitle' => ['Polcode', 'UPC'],
+                'companyTitle' => 'UPC',
                 'firstName' => 'Kosi',
                 'lastName' => 'Mimazaki',
                 'jobTitle' => 'Senior HelpDesk engineer',

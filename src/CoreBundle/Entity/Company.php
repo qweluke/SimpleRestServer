@@ -68,7 +68,7 @@ class Company
     protected $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="CoreBundle\Entity\Contact", mappedBy="company", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Contact", mappedBy="company", cascade={"persist"})
      */
     protected $contacts;
 
@@ -147,7 +147,7 @@ class Company
      */
     public function addContact(\CoreBundle\Entity\Contact $contact)
     {
-        $contact->addCompany($this);
+        $contact->setCompany($this);
         $this->contacts[] = $contact;
 
         return $this;
