@@ -40,12 +40,14 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
 
         $list = $this->companyContactsList();
 
+        $validator = $this->_container->get('validator');
+
         foreach ($list as $companyContactArr) {
 
             /** @var $addedBy User */
             $addedBy = $userRepo->findOneBy(['username' => $companyContactArr['createdBy']]);
 
-            /** @var $company Company */
+            /** @var $contact Contact */
             $contact = new Contact();
 
             $contact
@@ -55,20 +57,23 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 ->setGender($companyContactArr['gender'])
                 ->setBirthDate((new \DateTime($companyContactArr['birthDate'])))
                 ->setVisibleAll($companyContactArr['visibleAll'])
+                ->setEditableAll($companyContactArr['editableAll'])
                 ->setCreatedBy($addedBy)
                 ->setUpdatedBy($addedBy)
                 ;
 
-
-
-                /** @var $addedBy User */
+                /** @var $company Company */
                 $company = $companyRepo->findOneBy(['name' => $companyContactArr['companyTitle']]);
                 $company->addContact($contact);
 
 
+            $errors = $validator->validate($contact);
+            if(count($errors) > 0) {
+                throw new \Exception((string) $errors );
+            }
+
             $manager->persist($contact);
             $manager->persist($company);
-
         }
 
         $manager->flush();
@@ -86,6 +91,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'gender' => 'male',
                 'birthDate' => '1973-11-23',
                 'visibleAll' => true,
+                'editableAll' => false,
                 'createdBy' => 'root',
             ],
             [
@@ -96,6 +102,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'gender' => 'female',
                 'birthDate' => '1953-04-14',
                 'visibleAll' => true,
+                'editableAll' => true,
                 'createdBy' => 'root',
             ],
             [
@@ -106,6 +113,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'gender' => 'male',
                 'birthDate' => '1980-02-14',
                 'visibleAll' => true,
+                'editableAll' => true,
                 'createdBy' => 'user1',
             ],
             [
@@ -115,7 +123,8 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'jobTitle' => null,
                 'gender' => 'female',
                 'birthDate' => '1988-03-18',
-                'visibleAll' => false,
+                'visibleAll' => true,
+                'editableAll' => true,
                 'createdBy' => 'user1',
             ],
             [
@@ -126,6 +135,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'gender' => 'female',
                 'birthDate' => '1985-12-18',
                 'visibleAll' => true,
+                'editableAll' => false,
                 'createdBy' => 'user1',
             ],
             [
@@ -136,6 +146,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'gender' => 'female',
                 'birthDate' => '1986-01-25',
                 'visibleAll' => true,
+                'editableAll' => true,
                 'createdBy' => 'user2',
             ],
             [
@@ -146,6 +157,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'gender' => 'female',
                 'birthDate' => '1986-10-18',
                 'visibleAll' => true,
+                'editableAll' => true,
                 'createdBy' => 'user3',
             ],
             [
@@ -156,6 +168,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'gender' => 'male',
                 'birthDate' => '1990-03-22',
                 'visibleAll' => false,
+                'editableAll' => false,
                 'createdBy' => 'user3',
             ],
             [
@@ -166,6 +179,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'gender' => 'female',
                 'birthDate' => '1991-07-22',
                 'visibleAll' => true,
+                'editableAll' => true,
                 'createdBy' => 'user3',
             ],
             [
@@ -176,6 +190,7 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 'gender' => 'male',
                 'birthDate' => '1994-08-28',
                 'visibleAll' => true,
+                'editableAll' => false,
                 'createdBy' => 'user3',
             ],
         ];

@@ -4,8 +4,6 @@ namespace CoreBundle\Entity;
 
 use CoreBundle\Traits\Bleamable;
 use CoreBundle\Traits\Timestampable;
-use FOS\UserBundle\Model\User as BaseUser;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -13,7 +11,6 @@ use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation as JMS;
-use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\Entity(repositoryClass="CoreBundle\Entity\Repository\CompanyRepository")

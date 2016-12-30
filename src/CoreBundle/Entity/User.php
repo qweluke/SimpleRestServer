@@ -22,6 +22,7 @@ use JMS\Serializer\Annotation\Accessor;
  *
  * @UniqueEntity("username")
  * @UniqueEntity("email")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User extends BaseUser
 {
@@ -56,7 +57,6 @@ class User extends BaseUser
 
     /**
      * Username
-     *
      *
      * @Assert\Length(
      *      min = 5,
@@ -159,7 +159,7 @@ class User extends BaseUser
     protected $gender;
 
     /**
-     * User gender.
+     * User birthdate.
      *
      * @Expose
      * @JMS\Groups({"ROLE_ADMIN"})
@@ -263,5 +263,10 @@ class User extends BaseUser
     public function getBirthDate()
     {
         return $this->birthDate;
+    }
+
+    public function __toString()
+    {
+        return (int) $this->getId();
     }
 }

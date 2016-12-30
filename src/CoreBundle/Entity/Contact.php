@@ -4,7 +4,6 @@ namespace CoreBundle\Entity;
 
 use CoreBundle\Traits\Bleamable;
 use CoreBundle\Traits\Timestampable;
-use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +12,6 @@ use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation as JMS;
-use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\Entity(repositoryClass="CoreBundle\Entity\Repository\ContactRepository")
@@ -21,8 +19,6 @@ use JMS\Serializer\Annotation\Accessor;
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ExclusionPolicy("all")
  *
- * @UniqueEntity("username")
- * @UniqueEntity("email")
  */
 class Contact
 {
@@ -88,7 +84,6 @@ class Contact
      * )
      *
      * @Expose
-     * @Assert\NotBlank()
      * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      * @ORM\Column(type="string", nullable=true)
      */
@@ -134,9 +129,21 @@ class Contact
      * Contact visibility.
      * @Expose
      * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     protected $visibleAll;
+
+    /**
+     * Contact visibility.
+     * @Expose
+     * @Assert\Expression(
+     *     "not (this.getVisibleAll() != true and value == true)",
+     *     message="Contact must be visible to all if you want to make it editable for all."
+     * )
+     * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $editableAll;
 
     /**
      * Constructor
@@ -347,5 +354,29 @@ class Contact
     public function getCompany()
     {
         return $this->company;
+    }
+
+    /**
+     * Set editableAll
+     *
+     * @param boolean $editableAll
+     *
+     * @return Contact
+     */
+    public function setEditableAll($editableAll)
+    {
+        $this->editableAll = $editableAll;
+
+        return $this;
+    }
+
+    /**
+     * Get editableAll
+     *
+     * @return boolean
+     */
+    public function getEditableAll()
+    {
+        return $this->editableAll;
     }
 }

@@ -10,4 +10,30 @@ namespace CoreBundle\Entity\Repository;
  */
 class ContactRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function search(array $query = [])
+    {
+
+        $rows = $this->getEntityManager()->createQueryBuilder()
+            ->select('c')
+            ->from('CoreBundle:Contact', 'c');
+
+        if (!empty($query['query'])) {
+            $rows->orWhere('c.firstName like :query')
+                ->orWhere('c.lastName like :query')
+                ->orWhere('c.jobTitle like :query')
+                ->setParameter('query', '%' . $query['query'] . '%');
+        }
+
+        if (isset($query['orderBy']) && is_array($query['orderBy'])) {
+            foreach ($query['orderBy'] as $orderBy) {
+                if (preg_match('/^(id|firstName|lastName|jobTitle|company) (ASC|DESC)/', $orderBy)) {
+                    list($column, $dir) = explode(' ', $orderBy);
+                    $rows->addOrderBy('c.' . $column, $dir);
+                }
+            }
+        }
+
+
+        return $rows->getQuery()->getResult();
+    }
 }
