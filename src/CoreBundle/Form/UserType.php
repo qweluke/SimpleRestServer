@@ -90,7 +90,9 @@ class UserType extends AbstractType
                     'choices' => array('male', 'female'),
                 ])
                 ->add('birthDate', DateType::class, [
-                    'required' => false
+                    'required' => false,
+                    'format' => 'yyyy-MM-dd',
+                    'widget' => 'single_text'
                 ])
                 ->add('email', EmailType::class, [
                     'required' => false

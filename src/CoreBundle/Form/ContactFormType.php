@@ -55,6 +55,8 @@ class ContactFormType extends AbstractType
             ])
             ->add('birthDate', DateType::class, [
                 'required' => $data['required'],
+                'format' => 'yyyy-MM-dd',
+                'widget' => 'single_text',
             ])
             ->add('visibleAll', ChoiceType::class, [
                 'description' => 'Set 1 for true, 0 for false',
