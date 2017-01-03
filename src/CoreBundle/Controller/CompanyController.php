@@ -222,6 +222,8 @@ class CompanyController extends BaseController
      * Update user. At least one field must be set to run this method.
      *
      * @Rest\Patch( "/{company}", requirements={"company" = "\d+"} )
+
+     * @Security("is_granted('edit', company)")
      *
      * @Rest\View(serializerGroups={"ROLE_USER", "ROLE_ADMIN"})
      * @param Request $request
@@ -281,11 +283,11 @@ class CompanyController extends BaseController
         return $this->handleView($view);
     }
 
-    // TODO: allow deleting only by owner or admin
     /**
      * Deletes a Company entity.
      *
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('delete', company)")
+     *
      * @Rest\Delete( "/{company}", requirements={"company" = "\d+"} )
      *
      * @Rest\View(serializerGroups={"ROLE_USER","ROLE_ADMIN"})
@@ -338,17 +340,18 @@ class CompanyController extends BaseController
         return $this->handleView($view);
     }
 
-    // TODO: allow deleting only by owner or admin
     /**
      * Deletes a Company entity.
      *
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('delete', contact)")
+     *
      * @Rest\Delete( "/{company}", requirements={"company" = "\d+"} )
      *
      * @Rest\View(serializerGroups={"ROLE_USER","ROLE_ADMIN"})
-     * @param Request $request
      * @param Company $company
+     * @param Contact $contact
      * @return View
+     * @internal param Request $request
      * @internal param User $user
      * @ApiDoc(
      *  headers={

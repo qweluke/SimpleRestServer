@@ -48,3 +48,10 @@ services:
         arguments: ["@security.authorization_checker"]
         tags:
             - { name: form.type, alias: user_type }
+
+    form_voter:
+        class:      CoreBundle\Security\FormVoter
+        arguments: ['@security.access.decision_manager']
+        public:     false
+        tags:
+           - { name: security.voter }

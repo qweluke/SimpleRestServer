@@ -190,6 +190,8 @@ class CompanyContactController extends BaseController
      *
      * @Rest\Patch( "/{contact}", requirements={"contact" = "\d+"} )
      *
+     * @Security("is_granted('delete', contact)")
+     *
      * @Rest\View(serializerGroups={"ROLE_USER", "ROLE_ADMIN"})
      * @param Request $request
      * @param Contact $contact
@@ -253,11 +255,11 @@ class CompanyContactController extends BaseController
         return $this->handleView($view);
     }
 
-    // TODO: allow deleting only by owner or admin
     /**
      * Deletes a Company entity.
      *
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('delete', contact)")
+     *
      * @Rest\Delete( "/{contact}", requirements={"contact" = "\d+"} )
      *
      * @Rest\View(serializerGroups={"ROLE_USER","ROLE_ADMIN"})
