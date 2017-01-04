@@ -15,17 +15,11 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * @ORM\Entity(repositoryClass="CoreBundle\Entity\Repository\CompanyRepository")
  * @ORM\Table(name="company")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ExclusionPolicy("all")
  *
  */
 class Company
 {
-    /**
-     * Hook SoftDeleteable behavior
-     * updates deletedAt field
-     */
-    use SoftDeleteableEntity;
     use Timestampable;
     use Bleamable;
 
