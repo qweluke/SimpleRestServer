@@ -121,21 +121,10 @@ class Contact
      */
     protected $birthDate;
 
-    /**
-     * Contact visibility.
-     * @Expose
-     * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    protected $visibleAll;
 
     /**
      * Contact visibility.
      * @Expose
-     * @Assert\Expression(
-     *     "not (this.getVisibleAll() != true and value == true)",
-     *     message="Contact must be visible to all if you want to make it editable for all."
-     * )
      * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      * @ORM\Column(type="boolean", nullable=false)
      */
@@ -278,31 +267,6 @@ class Contact
     {
         return $this->birthDate;
     }
-
-    /**
-     * Set visibleAll
-     *
-     * @param boolean $visibleAll
-     *
-     * @return Contact
-     */
-    public function setVisibleAll($visibleAll)
-    {
-        $this->visibleAll = $visibleAll;
-
-        return $this;
-    }
-
-    /**
-     * Get visibleAll
-     *
-     * @return boolean
-     */
-    public function getVisibleAll()
-    {
-        return $this->visibleAll;
-    }
-
 
     /**
      * Set image

@@ -36,7 +36,6 @@ class CompanyContactControllerTest extends BaseTestController
             'lastName' => 'Unit',
             'jobTitle' => 'phpUnit',
             'birthDate' => '1987-01-01',
-            'visibleAll' => 1,
             'editableAll' => 0,
         ];
 

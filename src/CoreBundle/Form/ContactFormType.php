@@ -58,11 +58,6 @@ class ContactFormType extends AbstractType
                 'format' => 'yyyy-MM-dd',
                 'widget' => 'single_text',
             ])
-            ->add('visibleAll', ChoiceType::class, [
-                'description' => 'Set 1 for true, 0 for false',
-                'choices' => array('1', '0'),
-                'required' => $data['required']
-            ])
             ->add('editableAll', ChoiceType::class, [
                 'description' => 'Set 1 for true, 0 for false',
                 'choices' => array('1', '0'),

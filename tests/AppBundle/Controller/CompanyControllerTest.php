@@ -3,7 +3,7 @@
 namespace Tests\AppBundle\Controller;
 
 
-class CompanyContactControllerTest extends BaseTestController
+class CompanyControllerTest extends BaseTestController
 {
 
     private $client;
@@ -103,7 +103,6 @@ class CompanyContactControllerTest extends BaseTestController
             'company' => $response[0]->id,
             'jobTitle' => 'phpUnit',
             'birthDate' => '1987-01-01',
-            'visibleAll' => 1,
             'editableAll' => 1,
         ];
 
@@ -114,8 +113,6 @@ class CompanyContactControllerTest extends BaseTestController
         $user1 = parent::createAuthenticatedClient('user1', 'user1');
 
         $user1->request('DELETE', '/api/company/' . $response[0]->id . '/' . $contact->id);
-
-        var_dump( $user1->getResponse()->getContent() );
         $this->assertTrue($user1->getResponse()->isSuccessful());
     }
 
@@ -142,7 +139,6 @@ class CompanyContactControllerTest extends BaseTestController
                 'company' => $response[0]->id,
                 'jobTitle' => 'phpUnit',
                 'birthDate' => '1987-01-01',
-                'visibleAll' => 1,
                 'editableAll' => 0,
             ];
 

@@ -51,7 +51,6 @@ class LoadCompanyContactData extends AbstractFixture implements FixtureInterface
                 ->setJobTitle($companyContactArr['jobTitle'])
                 ->setGender($companyContactArr['gender'])
                 ->setBirthDate((new \DateTime($companyContactArr['birthDate'])))
-                ->setVisibleAll($companyContactArr['visibleAll'])
                 ->setEditableAll($companyContactArr['editableAll'])
                 ->setCreatedBy($this->getReference('user-' . $companyContactArr['createdBy']))
                 ->setUpdatedBy($this->getReference('user-' . $companyContactArr['createdBy']))
@@ -85,7 +84,6 @@ class LoadCompanyContactData extends AbstractFixture implements FixtureInterface
                 'jobTitle' => 'Director',
                 'gender' => 'male',
                 'birthDate' => '1973-11-23',
-                'visibleAll' => true,
                 'editableAll' => false,
                 'createdBy' => 'root',
             ],
@@ -96,7 +94,6 @@ class LoadCompanyContactData extends AbstractFixture implements FixtureInterface
                 'jobTitle' => 'Sales Director',
                 'gender' => 'female',
                 'birthDate' => '1953-04-14',
-                'visibleAll' => true,
                 'editableAll' => true,
                 'createdBy' => 'root',
             ],
@@ -107,7 +104,6 @@ class LoadCompanyContactData extends AbstractFixture implements FixtureInterface
                 'jobTitle' => 'Owner',
                 'gender' => 'male',
                 'birthDate' => '1980-02-14',
-                'visibleAll' => true,
                 'editableAll' => true,
                 'createdBy' => 'user1',
             ],
@@ -118,7 +114,6 @@ class LoadCompanyContactData extends AbstractFixture implements FixtureInterface
                 'jobTitle' => null,
                 'gender' => 'female',
                 'birthDate' => '1988-03-18',
-                'visibleAll' => true,
                 'editableAll' => true,
                 'createdBy' => 'user1',
             ],
@@ -129,7 +124,6 @@ class LoadCompanyContactData extends AbstractFixture implements FixtureInterface
                 'jobTitle' => 'Billing specialist',
                 'gender' => 'female',
                 'birthDate' => '1985-12-18',
-                'visibleAll' => true,
                 'editableAll' => false,
                 'createdBy' => 'user1',
             ],
@@ -140,7 +134,6 @@ class LoadCompanyContactData extends AbstractFixture implements FixtureInterface
                 'jobTitle' => 'Billing specialist',
                 'gender' => 'female',
                 'birthDate' => '1986-01-25',
-                'visibleAll' => true,
                 'editableAll' => true,
                 'createdBy' => 'user2',
             ],
@@ -151,7 +144,6 @@ class LoadCompanyContactData extends AbstractFixture implements FixtureInterface
                 'jobTitle' => 'Economy specialist',
                 'gender' => 'female',
                 'birthDate' => '1986-10-18',
-                'visibleAll' => true,
                 'editableAll' => true,
                 'createdBy' => 'user3',
             ],
@@ -162,7 +154,6 @@ class LoadCompanyContactData extends AbstractFixture implements FixtureInterface
                 'jobTitle' => 'HelpDesk engineer',
                 'gender' => 'male',
                 'birthDate' => '1990-03-22',
-                'visibleAll' => false,
                 'editableAll' => false,
                 'createdBy' => 'user3',
             ],
@@ -173,7 +164,6 @@ class LoadCompanyContactData extends AbstractFixture implements FixtureInterface
                 'jobTitle' => 'HelpDesk engineer',
                 'gender' => 'female',
                 'birthDate' => '1991-07-22',
-                'visibleAll' => true,
                 'editableAll' => true,
                 'createdBy' => 'user3',
             ],
@@ -184,7 +174,6 @@ class LoadCompanyContactData extends AbstractFixture implements FixtureInterface
                 'jobTitle' => 'Senior HelpDesk engineer',
                 'gender' => 'male',
                 'birthDate' => '1994-08-28',
-                'visibleAll' => true,
                 'editableAll' => false,
                 'createdBy' => 'user3',
             ],

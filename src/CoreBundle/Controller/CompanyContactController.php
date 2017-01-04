@@ -99,9 +99,7 @@ class CompanyContactController extends BaseController
      *      {"name"="jobTitle", "dataType"="string", "description"="Contact job title", "required"="false"},
      *      {"name"="company", "dataType"="int", "description"="Company id", "required"=""},
      *      {"name"="image", "dataType"="file", "description"="Contact image", "required"=""},
-     *      {"name"="birthDate", "dataType"="string", "description"="Contact birth date", "format"="YYYY-MM-DD", "required"=""},
-     *      {"name"="visibleAll", "dataType"="boolean", "description"="Is contact visible to all users.", "format"="(1|0)", "required"="true"},
-     *      {"name"="editableAll", "dataType"="boolean", "description"="If true, {visibleAll} must be true as well.", "format"="(1|0)", "required"="true"},
+     *      {"name"="editableAll", "dataType"="boolean", "description"="Allow all users to edit contact", "format"="(1|0)", "required"=""},
      *  },
      *
      *  output={
@@ -213,8 +211,7 @@ class CompanyContactController extends BaseController
      *      {"name"="company", "dataType"="int", "description"="Company id", "required"=""},
      *      {"name"="image", "dataType"="file", "description"="Contact image", "required"=""},
      *      {"name"="birthDate", "dataType"="string", "description"="Contact birth date", "format"="YYYY-MM-DD", "required"=""},
-     *      {"name"="visibleAll", "dataType"="boolean", "description"="Is contact visible to all users.", "format"="(1|0)", "required"="true"},
-     *      {"name"="editableAll", "dataType"="boolean", "description"="If true, {visibleAll} must be true as well.", "format"="(1|0)", "required"=""},
+     *      {"name"="editableAll", "dataType"="boolean", "description"="Allow all users to edit contact", "format"="(1|0)", "required"=""},
      *  },
      *
      *  output={
