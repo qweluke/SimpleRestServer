@@ -95,6 +95,8 @@ class Contact
      *     allowLandscape = false,
      *     allowPortrait = false
      * )
+     * @Expose
+     * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      */
     private $image;
 
@@ -112,7 +114,7 @@ class Contact
      * Contact birthDate.
      *
      * @Expose
-     * @JMS\Groups({"ROLE_ADMIN"})
+     * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      * @JMS\Type("DateTime<'Y-m-d'>")
      * @Assert\Date()
      * @ORM\Column(type="date", nullable=true)

@@ -37,12 +37,6 @@ class CompanyFormType extends AbstractType
             ])
             ->add('description', TextType::class, [
                 'required' => false
-            ])
-            ->add('contacts', EntityType::class, [
-                'class' => 'CoreBundle\Entity\Contact',
-                'description' => 'Array of contact\'s ID\'s',
-                'multiple' => true,
-                'required' => false
             ]);
     }
 

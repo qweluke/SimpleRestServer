@@ -5,6 +5,7 @@ namespace CoreBundle\Controller;
 use CoreBundle\Entity\Company;
 use CoreBundle\Entity\Contact;
 use CoreBundle\Form as Forms;
+use CoreBundle\Security\CompanyContactVoter;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -180,51 +181,10 @@ class CompanyController extends BaseController
     }
 
     /**
-     *
-     * @Rest\Get( "/{company}/contacts", requirements={"company" = "\d+"})
-     * @Rest\View(serializerGroups={"ROLE_USER", "ROLE_ADMIN"})
-     * @param Company $company
-     * @return View
-     * @throws \NotFoundHttpException
-     *
-     * @ApiDoc(
-     *  headers={
-     *      {
-     *          "name"="Authorization",
-     *          "required"="true",
-     *          "description"="Bearer TOKEN"
-     *      }
-     *  },
-     *  resource="/api/company/",
-     *  description="Returns company information",
-     *
-     *  output={
-     *   "class"="CoreBundle\Entity\Company",
-     *   "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"},
-     *   "groups"={"ROLE_USER", "ROLE_ADMIN"}
-     *  }
-     * )
-     */
-    public function showContactsAction(Company $company)
-    {
-
-        $view = View::create()
-            ->setSerializationContext(SerializationContext::create()
-                ->setGroups($this->getUser()->getRoles())
-            )
-            ->setData($company->getContacts());
-
-        return $this->handleView($view);
-    }
-
-
-    /**
      * Update user. At least one field must be set to run this method.
      *
      * @Rest\Patch( "/{company}", requirements={"company" = "\d+"} )
 
-     * @Security("is_granted('edit', company)")
-     *
      * @Rest\View(serializerGroups={"ROLE_USER", "ROLE_ADMIN"})
      * @param Request $request
      * @param Company $company
@@ -243,7 +203,6 @@ class CompanyController extends BaseController
      *  parameters={
      *      {"name"="name", "dataType"="string", "description"="User login", "required"=""},
      *      {"name"="description", "dataType"="string", "description"="User email", "required"=""},
-     *      {"name"="contacts[]", "dataType"="Array<int>", "description"="Array of contact's ID's", "format"="\d+", "required"=""},
      *  },
      *
      *  output={
@@ -260,14 +219,14 @@ class CompanyController extends BaseController
                 ->setGroups($this->getUser()->getRoles())
             );
 
-        $editForm = $this->createForm(Forms\UserType::class, $company);
+        $editForm = $this->createForm(Forms\CompanyFormType::class, $company);
         $editForm->submit($request->request->all(), false);
 
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
-            $this->get('fos_user.user_manager')->updateUser($company, true);
-
+            $this->getDoctrine()->getManager()->merge($company);
+            $this->getDoctrine()->getManager()->flush();
             $view
                 ->setStatusCode(Codes::HTTP_OK)
                 ->setData($company);
@@ -276,7 +235,7 @@ class CompanyController extends BaseController
                 ->setStatusCode(Codes::HTTP_BAD_REQUEST)
                 ->setData([
                     'success' => false,
-                    'message' => 'Unable to update company.',
+                    'message' => 'Unable to update contact.',
                     'exception' => $this->getFormErrors($editForm)]);
         }
 
@@ -284,9 +243,7 @@ class CompanyController extends BaseController
     }
 
     /**
-     * Deletes a Company entity.
-     *
-     * @Security("is_granted('delete', company)")
+     * Deletes a Company with all contacts.
      *
      * @Rest\Delete( "/{company}", requirements={"company" = "\d+"} )
      *
@@ -304,7 +261,7 @@ class CompanyController extends BaseController
      *      }
      *  },
      *  resource="/api/company/",
-     *  description="Deletes content"
+     *  description="Deletes company with all contacts"
      * )
      */
     public function deleteCompanyAction(Request $request, Company $company)
@@ -341,11 +298,12 @@ class CompanyController extends BaseController
     }
 
     /**
-     * Deletes a Company entity.
+     * Deletes a Company contact.
      *
-     * @Security("is_granted('delete', contact)")
-     *
-     * @Rest\Delete( "/{company}", requirements={"company" = "\d+"} )
+     * @Rest\Delete( "/{company}/{contact}", requirements={
+     *     "company" = "\d+",
+     *     "contact" = "\d+"
+     * })
      *
      * @Rest\View(serializerGroups={"ROLE_USER","ROLE_ADMIN"})
      * @param Company $company
@@ -362,11 +320,15 @@ class CompanyController extends BaseController
      *      }
      *  },
      *  resource="/api/company/",
-     *  description="Deletes content"
+     *  description="Deletes company contact"
      * )
      */
     public function deleteCompanyContactAction(Company $company, Contact $contact)
     {
+        if (!$this->isGranted(CompanyContactVoter::DELETE, $contact)) {
+            throw $this->createAccessDeniedException();
+        }
+
         $view = View::create()
             ->setSerializationContext(SerializationContext::create()
                 ->setGroups($this->getUser()->getRoles())

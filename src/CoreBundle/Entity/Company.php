@@ -59,7 +59,12 @@ class Company
     protected $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Contact", mappedBy="company", cascade={"persist"})
+     * @var Contact[]
+     * @Expose
+     * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
+     * @JMS\Type("array<CoreBundle\Entity\Contact>")
+     *
+     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Contact", mappedBy="company", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $contacts;
 
