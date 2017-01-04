@@ -10,13 +10,14 @@ namespace CoreBundle\DataFixtures\ORM;
 
 use CoreBundle\Entity\Company;
 use CoreBundle\Entity\User;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-class LoadCompanyData implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
+class LoadCompanyData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
     /**
      * @var ContainerInterface
@@ -40,18 +41,16 @@ class LoadCompanyData implements FixtureInterface, ContainerAwareInterface, Orde
 
         foreach ($list as $companyArr) {
 
-            /** @var $addedBy User */
-            $addedBy = $userRepo->findOneBy(['username' => $companyArr['addedBy']]);
-
             /** @var $company Company */
             $company = new Company();
 
             $company
                 ->setName($companyArr['name'])
                 ->setDescription($companyArr['description'])
-                ->setCreatedBy($addedBy)
-                ->setUpdatedBy($addedBy)
-                ;
+                ->setCreatedBy($this->getReference('user-' . $companyArr['addedBy']))
+                ->setUpdatedBy($this->getReference('user-' . $companyArr['addedBy']));
+
+            $this->addReference('company-' . $companyArr['name'], $company);
 
             $manager->persist($company);
 
@@ -73,15 +72,15 @@ class LoadCompanyData implements FixtureInterface, ContainerAwareInterface, Orde
                 'name' => 'UPC',
                 'description' => 'Libert Global\'s Polish Cable TV',
                 'addedBy' => 'root'
-            ],            [
+            ], [
                 'name' => 'Orange',
                 'description' => null,
                 'addedBy' => 'user1'
-            ],            [
+            ], [
                 'name' => 'Telekomunikacja Polska',
                 'description' => 'Non existing Polish telephone operator.',
                 'addedBy' => 'user1'
-            ],            [
+            ], [
                 'name' => 'Zanox',
                 'description' => 'Largest affiliate marketing network',
                 'addedBy' => 'user2'

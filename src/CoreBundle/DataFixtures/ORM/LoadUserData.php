@@ -9,13 +9,14 @@
 namespace CoreBundle\DataFixtures\ORM;
 
 use CoreBundle\Entity\User;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-class LoadUserData implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
+class LoadUserData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
     /**
      * @var ContainerInterface
@@ -54,8 +55,10 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface, Ordered
             $password = $encoder->encodePassword($userArr['password'], $user->getSalt());
             $user->setPassword($password);
 
+
             $userManager->updateUser($user);
 
+            $this->addReference('user-' . $userArr['username'], $user);
         }
 
     }

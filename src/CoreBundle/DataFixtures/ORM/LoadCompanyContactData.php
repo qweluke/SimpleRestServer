@@ -11,13 +11,14 @@ namespace CoreBundle\DataFixtures\ORM;
 use CoreBundle\Entity\Company;
 use CoreBundle\Entity\Contact;
 use CoreBundle\Entity\User;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
+class LoadCompanyContactData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
     /**
      * @var ContainerInterface
@@ -35,17 +36,11 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
     public function load(ObjectManager $manager)
     {
 
-        $companyRepo = $manager->getRepository(Company::class);
-        $userRepo = $manager->getRepository(User::class);
-
         $list = $this->companyContactsList();
 
         $validator = $this->_container->get('validator');
 
         foreach ($list as $companyContactArr) {
-
-            /** @var $addedBy User */
-            $addedBy = $userRepo->findOneBy(['username' => $companyContactArr['createdBy']]);
 
             /** @var $contact Contact */
             $contact = new Contact();
@@ -58,12 +53,12 @@ class LoadCompanyContactData implements FixtureInterface, ContainerAwareInterfac
                 ->setBirthDate((new \DateTime($companyContactArr['birthDate'])))
                 ->setVisibleAll($companyContactArr['visibleAll'])
                 ->setEditableAll($companyContactArr['editableAll'])
-                ->setCreatedBy($addedBy)
-                ->setUpdatedBy($addedBy)
+                ->setCreatedBy($this->getReference('user-' . $companyContactArr['createdBy']))
+                ->setUpdatedBy($this->getReference('user-' . $companyContactArr['createdBy']))
                 ;
 
                 /** @var $company Company */
-                $company = $companyRepo->findOneBy(['name' => $companyContactArr['companyTitle']]);
+                $company = $this->getReference('company-' . $companyContactArr['companyTitle']);
                 $company->addContact($contact);
 
 
