@@ -49,8 +49,8 @@ services:
         tags:
             - { name: form.type, alias: user_type }
 
-    form_voter:
-        class:      CoreBundle\Security\FormVoter
+    app.contact_voter:
+        class:      CoreBundle\Security\CompanyContactVoter
         arguments: ['@security.access.decision_manager']
         public:     false
         tags:

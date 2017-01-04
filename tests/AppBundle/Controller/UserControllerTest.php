@@ -129,7 +129,6 @@ class UserControllerTest extends BaseTestController
         $userData = [
             'firstName' => 'Test PHP 1',
             'lastName' => 'Unit 1',
-            'plainPassword' => 'phpUnit_2',
             'gender' => 'female',
             'birthDate' => '1988-01-01',
         ];

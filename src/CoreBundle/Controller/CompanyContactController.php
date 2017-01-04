@@ -5,9 +5,11 @@ namespace CoreBundle\Controller;
 use CoreBundle\Entity\Company;
 use CoreBundle\Entity\Contact;
 use CoreBundle\Form as Forms;
+use CoreBundle\Security\CompanyContactVoter;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\RestBundle\Util\Codes;
@@ -189,8 +191,6 @@ class CompanyContactController extends BaseController
      *
      * @Rest\Patch( "/{contact}", requirements={"contact" = "\d+"} )
      *
-     * @Security("is_granted('delete', contact)")
-     *
      * @Rest\View(serializerGroups={"ROLE_USER", "ROLE_ADMIN"})
      * @param Request $request
      * @param Contact $contact
@@ -220,12 +220,16 @@ class CompanyContactController extends BaseController
      *  output={
      *   "class"="CoreBundle\Entity\Contact",
      *   "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"},
-     *   "groups"={"ROLE_ADMIN"}
+     *   "groups"={"ROLE_USER","ROLE_ADMIN"}
      *  }
      * )
      */
     public function editAction(Request $request, Contact $contact)
     {
+        if (!$this->isGranted(CompanyContactVoter::EDIT, $contact)) {
+            throw $this->createAccessDeniedException();
+        }
+
         $view = View::create()
             ->setSerializationContext(SerializationContext::create()
                 ->setGroups($this->getUser()->getRoles())
@@ -257,8 +261,6 @@ class CompanyContactController extends BaseController
     /**
      * Deletes a Company entity.
      *
-     * @Security("is_granted('delete', contact)")
-     *
      * @Rest\Delete( "/{contact}", requirements={"contact" = "\d+"} )
      *
      * @Rest\View(serializerGroups={"ROLE_USER","ROLE_ADMIN"})
@@ -280,6 +282,10 @@ class CompanyContactController extends BaseController
      */
     public function deleteContactAction(Request $request, Contact $contact)
     {
+        if (!$this->isGranted(CompanyContactVoter::DELETE, $contact)) {
+            throw $this->createAccessDeniedException();
+        }
+
         $view = View::create()
             ->setSerializationContext(SerializationContext::create()
                 ->setGroups($this->getUser()->getRoles())

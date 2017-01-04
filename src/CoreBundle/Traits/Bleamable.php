@@ -45,7 +45,10 @@ trait Bleamable
 
     public function getUpdatedById()
     {
-        return $this->getUpdatedBy()->getId();
+        if($this->getUpdatedBy()) {
+            return $this->getUpdatedBy()->getId();
+        }
+        return null;
     }
 
     /**

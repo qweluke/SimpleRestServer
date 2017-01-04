@@ -17,13 +17,13 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 
-class FormVoter extends Voter
+class CompanyContactVoter extends Voter
 {
-    const DELETE = 'delete';
-    const EDIT = 'edit';
+    const DELETE = 'CONTACT_DELETE';
+    const EDIT = 'CONTACT_EDIT';
 
     /**
-     * @var AccessDecisionManagerInterface
+     * @var AccessDecisionManagerInterface $decisionManager
      */
     private $decisionManager;
 
@@ -38,12 +38,10 @@ class FormVoter extends Voter
             return false;
         }
 
-        if (!in_array($subject, [Company::class, Contact::class])) {
+        // only vote on Contact objects inside this voter
+        if (!$subject instanceof Contact) {
             return false;
         }
-//        if (!$subject instanceof Post) {
-//            return false;
-//        }
 
         return true;
     }
@@ -63,13 +61,18 @@ class FormVoter extends Voter
             return true;
         }
 
+
+        // you know $subject is a Post object, thanks to supports
+        /** @var Contact $contact */
+        $contact = $subject;
+
         switch ($attribute) {
             case self::DELETE:
-                return $this->canEdit($subject, $user);
+                return $this->canEdit($contact, $user);
 
                 break;
             case self::EDIT:
-                return $this->canEdit($subject, $user);
+                return $this->canEdit($contact, $user);
 
                 break;
         }
@@ -77,27 +80,13 @@ class FormVoter extends Voter
         return false;
     }
 
-    private function canEdit($subject, User $user)
+    private function canEdit(Contact $contact, User $user)
     {
 
-        if ($subject instanceof Contact) {
-            /** @var Contact $contact */
-            $contact = $subject;
-
-            if ($contact->getVisibleAll() === true) {
-                return true;
-            }
-
-            return $user === $contact->getCreatedBy();
-
+        if ($contact->getEditableAll() === true) {
+            return true;
         }
 
-        if ($subject instanceof Company) {
-
-            /** @var Company $company */
-            $company = $subject;
-
-            return $user === $company->getCreatedBy();
-        }
+        return $user === $contact->getCreatedBy();
     }
 }
