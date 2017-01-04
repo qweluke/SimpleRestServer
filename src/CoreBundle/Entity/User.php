@@ -16,13 +16,15 @@ use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\Entity(repositoryClass="CoreBundle\Entity\Repository\UserRepository")
+ *
  * @ORM\Table(name="user")
+ *
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ExclusionPolicy("all")
  *
- * @UniqueEntity("username")
  * @UniqueEntity("email")
- * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity("username")
+ *
  */
 class User extends BaseUser
 {

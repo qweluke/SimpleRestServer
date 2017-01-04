@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -60,6 +59,8 @@ class UserType extends AbstractType
                 ])
                 ->add('birthDate', DateType::class, [
                     'required' => false,
+                    'format' => 'yyyy-MM-dd',
+                    'widget' => 'single_text',
                 ])
                 ->add('roles', ChoiceType::class, [
                     'required' => $data['required'],
@@ -92,7 +93,7 @@ class UserType extends AbstractType
                 ->add('birthDate', DateType::class, [
                     'required' => false,
                     'format' => 'yyyy-MM-dd',
-                    'widget' => 'single_text'
+                    'widget' => 'single_text',
                 ])
                 ->add('email', EmailType::class, [
                     'required' => false

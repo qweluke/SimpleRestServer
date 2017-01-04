@@ -6,6 +6,7 @@ use CoreBundle\Form as Forms;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use CoreBundle\Entity\User;
@@ -122,6 +123,7 @@ class UserController extends BaseController
      */
     public function newAction(Request $request)
     {
+
         $view = View::create()
             ->setSerializationContext(SerializationContext::create()
                 ->setGroups($this->getUser()->getRoles())
@@ -132,8 +134,18 @@ class UserController extends BaseController
         $form->submit($request->request->all());
 
 
+        $em = $this->getDoctrine()->getManager();
+        $em->getFilters()->disable('softdeleteable');
+
+        $isNotUnique = $em->getRepository(User::class)->findOneBy([
+            'usernameCanonical' => $user->getUsernameCanonical()
+        ]);
+
+        if($isNotUnique) {
+            $form->get('username')->addError(new FormError('Username already taken'));
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
 
             $em->persist($user);
             $em->flush();
@@ -243,6 +255,20 @@ class UserController extends BaseController
         $editForm = $this->createForm(Forms\UserType::class, $user);
         $editForm->submit($request->request->all(), false);
 
+        $em = $this->getDoctrine()->getManager();
+        $em->getFilters()->disable('softdeleteable');
+
+
+        $newUsername = $request->request->get('username');
+        if(isset($newUsername)) {
+            $isNotUnique = $em->getRepository(User::class)->findOneBy([
+                'usernameCanonical' => $user->getUsernameCanonical()
+            ]);
+
+            if($isNotUnique) {
+                $editForm->get('username')->addError(new FormError('Username already taken'));
+            }
+        }
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 

@@ -150,10 +150,9 @@ class CompanyContactController extends BaseController
      *
      * @Rest\Get( "/{contact}", requirements={"company" = "\d+"})
      * @Rest\View(serializerGroups={"ROLE_USER", "ROLE_ADMIN"})
-     * @param Company $company
+     * @param Contact $contact
      * @return View
-     * @throws \NotFoundHttpException
-     *
+     * @internal param Company $company
      * @ApiDoc(
      *  headers={
      *      {
