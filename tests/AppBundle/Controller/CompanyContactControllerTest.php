@@ -78,6 +78,10 @@ class CompanyContactControllerTest extends BaseTestController
             'lastName' => 'Unit new',
             'jobTitle' => 'php developer',
             'birthDate' => '1988-01-01',
+            'contactDetails' => [
+                ['type' => 'PHONE', 'value' => '+48322255873'],
+                ['type' => 'EMAIL', 'value' => 'thisis@gmail.com']
+            ]
         ];
 
         $user1 = parent::createAuthenticatedClient('user1', 'user1');

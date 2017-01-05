@@ -2,10 +2,11 @@
 
 namespace CoreBundle\Form;
 
+use CoreBundle\Form\Type\GenderType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -51,6 +52,15 @@ class ContactFormType extends AbstractType
                 'required' => $data['required']
             ])
             ->add('image', FileType::class, [
+                'required' => false
+            ])
+            ->add('gender', GenderType::class, [
+                'required' => $data['required']
+            ])
+            ->add('contactDetails', CollectionType::class, [
+                'entry_type' => ContactDetailFormType::class,
+                'allow_add'    => true,
+                'allow_delete' => true,
                 'required' => false
             ])
             ->add('birthDate', DateType::class, [

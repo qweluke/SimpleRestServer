@@ -39,7 +39,8 @@
     "nelmio/api-doc-bundle": "^2.12",
     "symfony/assetic-bundle": "^2.8",
     "nelmio/cors-bundle": "^1.4",
-    "lexik/jwt-authentication-bundle": "^2.0"
+    "lexik/jwt-authentication-bundle": "^2.0",
+    "misd/phone-number-bundle": "^1.2"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",

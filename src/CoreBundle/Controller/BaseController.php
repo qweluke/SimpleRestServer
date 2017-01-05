@@ -18,7 +18,8 @@ class BaseController extends FOSRestController
         }
 
         // Fields
-        foreach ($form as $child /** @var Form $child */) {
+        /** @var Form $child */
+        foreach ($form as $child) {
             if (!$child->isValid()) {
                 foreach ($child->getErrors() as $error) {
                     $errors[$child->getName()][] = $error->getMessage();

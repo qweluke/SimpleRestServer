@@ -4,12 +4,14 @@ namespace CoreBundle\Controller;
 
 use CoreBundle\Entity\Company;
 use CoreBundle\Entity\Contact;
+use CoreBundle\Entity\ContactDetail;
 use CoreBundle\Form as Forms;
 use CoreBundle\Security\CompanyContactVoter;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\RestBundle\Util\Codes;
@@ -22,13 +24,15 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
  *
  * @Route("/api/contact")
  */
-class CompanyContactController extends BaseController
+class CompanyContactDetailsController extends BaseController
 {
 
+
     /**
-     * Search for an users. At least one field must be setted in order to use this method.
+     * Creates a new contact detail.
+     * Please note that you can also create contact detail while creating|editing user.
      *
-     * @Rest\Get("/")
+     * @Rest\Post("/{contact}/detail/new", requirements={"contact" = "\d+"})
      * @Rest\View(serializerGroups={"ROLE_USER","ROLE_ADMIN"})
      *
      * @ApiDoc(
@@ -39,103 +43,47 @@ class CompanyContactController extends BaseController
      *          "description"="Bearer TOKEN"
      *      }
      *  },
-     *
-     *  resource="/api/contact/",
-     *  description="Search for a contact",
-     *  filters={
-     *      {"name"="query", "dataType"="string", "description"="Search for firstName, lastName, jobTitle or company containing a {query} value"},
-     *      {"name"="orderBy[]", "dataType"="array", "pattern"="(id|firstName|lastName|jobTitle|company) ASC|DESC"}
-     *  },
-     *
-     *
-     *  output={
-     *   "class"="CoreBundle\Entity\Contact",
-     *   "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"},
-     *   "groups"={"ROLE_USER","ROLE_ADMIN"}
-     *  }
-     * )
-     * @param Request $request
-     * @return View
-     */
-    public function indexAction(Request $request)
-    {
-        $view = View::create()
-            ->setSerializationContext(
-                SerializationContext::create()->setGroups($this->getUser()->getRoles())
-            );
-
-        $em = $this->getDoctrine()->getManager();
-
-
-        $users = $em->getRepository(Contact::class)->search($request->query->all());
-
-        $view
-            ->setStatusCode(Codes::HTTP_OK)
-            ->setData($users);
-
-        return $this->handleView($view);
-    }
-
-    /**
-     * Creates a new Company.
-     *
-     * @Rest\Post("/new")
-     * @Rest\View(serializerGroups={"ROLE_USER","ROLE_ADMIN"})
-     *
-     * @ApiDoc(
-     *  headers={
-     *      {
-     *          "name"="Authorization",
-     *          "required"="true",
-     *          "description"="Bearer TOKEN"
-     *      }
-     *  },
-     *  resource="/api/contact/",
-     *  description="Creates new contact",
+     *  resource="/api/contact/detail",
+     *  description="Creates new company",
      *
      *  parameters={
-     *      {"name"="firstName", "dataType"="string", "description"="Contact First name", "required"="true"},
-     *      {"name"="lastName", "dataType"="string", "description"="Contact last name", "required"="true"},
-     *      {"name"="jobTitle", "dataType"="string", "description"="Contact job title", "required"="false"},
-     *      {"name"="contactDetails[0][type]", "dataType"="string", "description"="Contact format type", "format"="PHONE|MOBILE|FAX|EMAIL", "required"=""},
-     *      {"name"="contactDetails[0][value]", "dataType"="string", "description"="Valid contact type value. To add multiple values increase index {0} for each record.", "format"="", "required"=""},
-     *      {"name"="company", "dataType"="int", "description"="Company id", "required"=""},
-     *      {"name"="image", "dataType"="file", "description"="Contact image", "required"=""},
-     *      {"name"="editableAll", "dataType"="boolean", "description"="Allow all users to edit contact", "format"="(1|0)", "required"=""},
+     *      {"name"="type", "dataType"="string", "description"="Contact format type", "format"="PHONE|MOBILE|FAX|EMAIL", "required"="true"},
+     *      {"name"="value", "dataType"="string", "description"="Valid contact type value.", "format"="", "required"="true"},
      *  },
      *
      *  output={
-     *   "class"="CoreBundle\Entity\Contact",
+     *   "class"="CoreBundle\Entity\ContactDetail",
      *   "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"},
      *   "groups"={"ROLE_USER","ROLE_ADMIN"}
      *  }
      * )
      *
      * @param Request $request
+     * @param Contact $contact
      * @return View
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, Contact $contact)
     {
         $view = View::create()
             ->setSerializationContext(SerializationContext::create()
                 ->setGroups($this->getUser()->getRoles())
             );
 
-        $contact = new Contact();
-        $form = $this->createForm(Forms\ContactFormType::class, $contact);
+        $contactDetail = new ContactDetail();
+        $form = $this->createForm(Forms\ContactDetailFormType::class, $contactDetail);
         $form->submit($request->request->all());
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-//        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $em->persist($contact);
+            $contactDetail->setContact($contact);
+            $em->persist($contactDetail);
             $em->flush();
 
             $view
                 ->setStatusCode(Codes::HTTP_OK)
-                ->setData($contact);
+                ->setData($contactDetail);
         } else {
             $view
                 ->setStatusCode(Codes::HTTP_BAD_REQUEST)
@@ -150,8 +98,9 @@ class CompanyContactController extends BaseController
     }
 
     /**
+     * Returns contact detail information
      *
-     * @Rest\Get( "/{contact}", requirements={"contact" = "\d+"})
+     * @Rest\Get( "/{contact}/detail", requirements={"contact" = "\d+"})
      * @Rest\View(serializerGroups={"ROLE_USER", "ROLE_ADMIN"})
      * @param Contact $contact
      * @return View
@@ -164,11 +113,11 @@ class CompanyContactController extends BaseController
      *          "description"="Bearer TOKEN"
      *      }
      *  },
-     *  resource="/api/contact/",
-     *  description="Returns company information",
+     *  resource="/api/contact/detail",
+     *  description="Returns contact data",
      *
      *  output={
-     *   "class"="CoreBundle\Entity\Contact",
+     *   "class"="CoreBundle\Entity\ContactDetail",
      *   "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"},
      *   "groups"={"ROLE_USER", "ROLE_ADMIN"}
      *  }
@@ -181,25 +130,31 @@ class CompanyContactController extends BaseController
             ->setSerializationContext(SerializationContext::create()
                 ->setGroups($this->getUser()->getRoles())
             )
-            ->setData($contact);
+            ->setData($contact->getContactDetails());
 
         return $this->handleView($view);
     }
 
 
     /**
-     * Update contact. At least one field must be set to run this method.
+     * Update contact detail. At least one field must be set to run this method.
      *
-     * @Rest\Patch( "/{contact}", requirements={"contact" = "\d+"} )
+     * @Rest\Patch( "/{contact}/detail/{detail}", requirements={
+     *     "contact" = "\d+",
+     *     "detail" = "\d+"
+     * } )
      *
      * @Rest\View(serializerGroups={"ROLE_USER", "ROLE_ADMIN"})
      * @param Request $request
      * @param Contact $contact
+     * @param ContactDetail $detail
      * @return View
+     * @throws \Exception
+     * @internal param ContactDetail $contactDetail
      * @ApiDoc(
      *     statusCodes={
      *         200="Returned when successful",
-     *         403="Returned when {editableAll} is set to false (0) and current user is not owner."
+     *         400="Returned when {detail} not belongs to the give {contact}"
      *     },
      *  headers={
      *      {
@@ -208,41 +163,35 @@ class CompanyContactController extends BaseController
      *          "description"="Bearer TOKEN"
      *      }
      *  },
-     *  resource="/api/contact/",
-     *  description="Updates contact data",
+     *  resource="/api/contact/detail",
+     *  description="Updates contact detail data",
      *
      *  parameters={
-     *      {"name"="firstName", "dataType"="string", "description"="Contact First name", "required"=""},
-     *      {"name"="lastName", "dataType"="string", "description"="Contact last name", "required"=""},
-     *      {"name"="jobTitle", "dataType"="string", "description"="Contact job title", "required"=""},
-     *      {"name"="contactDetails[0][type]", "dataType"="string", "description"="Contact format type", "format"="PHONE|MOBILE|FAX|EMAIL", "required"=""},
-     *      {"name"="contactDetails[0][value]", "dataType"="string", "description"="Valid contact type value. To add multiple values increase index {0} for each record.", "format"="", "required"=""},
-     *      {"name"="company", "dataType"="int", "description"="Company id", "required"=""},
-     *      {"name"="image", "dataType"="file", "description"="Contact image", "required"=""},
-     *      {"name"="birthDate", "dataType"="string", "description"="Contact birth date", "format"="YYYY-MM-DD", "required"=""},
-     *      {"name"="editableAll", "dataType"="boolean", "description"="Allow all users to edit contact", "format"="(1|0)", "required"=""},
+     *      {"name"="type", "dataType"="string", "description"="Contact format type", "format"="PHONE|MOBILE|FAX|EMAIL", "required"="true"},
+     *      {"name"="value", "dataType"="string", "description"="Valid contact type value.", "format"="", "required"="true"},
      *  },
      *
      *  output={
-     *   "class"="CoreBundle\Entity\Contact",
+     *   "class"="CoreBundle\Entity\ContactDetail",
      *   "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"},
      *   "groups"={"ROLE_USER","ROLE_ADMIN"}
      *  }
      * )
      */
-    public function editAction(Request $request, Contact $contact)
+    public function editAction(Request $request, Contact $contact, ContactDetail $detail)
     {
-        if (!$this->isGranted(CompanyContactVoter::EDIT, $contact)) {
-            throw $this->createAccessDeniedException();
-        }
 
         $view = View::create()
             ->setSerializationContext(SerializationContext::create()
                 ->setGroups($this->getUser()->getRoles())
             );
 
-        $editForm = $this->createForm(Forms\ContactFormType::class, $contact);
+        $editForm = $this->createForm(Forms\ContactDetailFormType::class, $detail);
         $editForm->submit($request->request->all(), false);
+
+        if(!$contact->getContactDetails()->contains($detail)) {
+            throw new \Exception('ContactDetail not belongs to the given Contact');
+        }
 
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -251,7 +200,7 @@ class CompanyContactController extends BaseController
             $this->getDoctrine()->getManager()->flush();
             $view
                 ->setStatusCode(Codes::HTTP_OK)
-                ->setData($contact);
+                ->setData($detail);
         } else {
             $view
                 ->setStatusCode(Codes::HTTP_BAD_REQUEST)
@@ -265,19 +214,24 @@ class CompanyContactController extends BaseController
     }
 
     /**
-     * Deletes a Contact entity with all contactDetails.
+     * Deletes a Contact detail
      *
-     * @Rest\Delete( "/{contact}", requirements={"contact" = "\d+"} )
+     * @Rest\Delete( "/{contact}/detail/{detail}", requirements={
+     *     "contact" = "\d+",
+     *     "detail" = "\d+"
+     * } )
      *
      * @Rest\View(serializerGroups={"ROLE_USER","ROLE_ADMIN"})
      * @param Request $request
      * @param Contact $contact
+     * @param ContactDetail $detail
      * @return View
-     * @internal param User $user
+     * @throws \Exception*
+     *
      * @ApiDoc(
      *     statusCodes={
      *         200="Returned when successful",
-     *         403="Returned when {editableAll} is set to false (0) and current user is not owner."
+     *         400="Returned when {detail} not belongs to the give {contact}"
      *     },
      *  headers={
      *      {
@@ -286,33 +240,34 @@ class CompanyContactController extends BaseController
      *          "description"="Bearer TOKEN"
      *      }
      *  },
-     *  resource="/api/contact/",
-     *  description="Deletes contact"
+     *  resource="/api/contact/detail",
+     *  description="Deletes contact detail"
      * )
      */
-    public function deleteContactAction(Request $request, Contact $contact)
+    public function deleteContactAction(Request $request, Contact $contact, ContactDetail $detail)
     {
-        if (!$this->isGranted(CompanyContactVoter::DELETE, $contact)) {
-            throw $this->createAccessDeniedException();
-        }
 
         $view = View::create()
             ->setSerializationContext(SerializationContext::create()
                 ->setGroups($this->getUser()->getRoles())
             );
 
+        if(!$contact->getContactDetails()->contains($detail)) {
+            throw new \Exception('ContactDetail not belongs to the given Contact');
+        }
+
         $form = $this->createFormBuilder()->setMethod('DELETE')->getForm();
         $form->submit($request->request->get($form->getName()));
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($contact);
+            $em->remove($detail);
             $em->flush();
 
             $view->setStatusCode(Codes::HTTP_OK)
                 ->setData([
                     'success' => true,
-                    'message' => 'Contact successfully deleted.'
+                    'message' => 'Contact detail successfully deleted.'
                 ]);
         } else {
             $view

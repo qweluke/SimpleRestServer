@@ -312,6 +312,10 @@ class CompanyController extends BaseController
      * @internal param Request $request
      * @internal param User $user
      * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         403="Returned when {editableAll} is set to false (0) and current user is not owner."
+     *     },
      *  headers={
      *      {
      *          "name"="Authorization",

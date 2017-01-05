@@ -55,3 +55,9 @@ services:
         public:     false
         tags:
            - { name: security.voter }
+
+    validator.contactdetail:
+        class: CoreBundle\Validator\Constraints\ContactDetailValidator
+        arguments: ['@validator', '@libphonenumber.phone_number_util']
+        tags:
+            - { name: validator.constraint_validator, alias: validator.contactdetail }

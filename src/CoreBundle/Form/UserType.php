@@ -2,6 +2,7 @@
 
 namespace CoreBundle\Form;
 
+use CoreBundle\Form\Type\GenderType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -54,8 +55,7 @@ class UserType extends AbstractType
                     'required' => $data['required']
                 ])
                 ->add('gender', ChoiceType::class, [
-                    'required' => $data['required'],
-                    'choices' => array('male', 'female'),
+                    'required' => $data['required']
                 ])
                 ->add('birthDate', DateType::class, [
                     'required' => false,
@@ -86,9 +86,8 @@ class UserType extends AbstractType
                 ->add('lastName', TextType::class, [
                     'required' => false
                 ])
-                ->add('gender', ChoiceType::class, [
-                    'required' => false,
-                    'choices' => array('male', 'female'),
+                ->add('gender', GenderType::class, [
+                    'required' => false
                 ])
                 ->add('birthDate', DateType::class, [
                     'required' => false,

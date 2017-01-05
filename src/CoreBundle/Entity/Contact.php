@@ -8,7 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use CoreBundle\Validator\Constraints as AppAssert;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation as JMS;
@@ -90,6 +90,16 @@ class Contact
     protected $company;
 
     /**
+     * @Assert\Valid()
+     *
+     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\ContactDetail", mappedBy="contact", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\JoinColumn(name="contact", referencedColumnName="id")
+     * @Expose
+     * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
+     */
+    protected $contactDetails;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      * @Assert\Image(
      *     allowLandscape = false,
@@ -127,6 +137,7 @@ class Contact
      * @Expose
      * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      * @ORM\Column(type="boolean", nullable=false)
+     * @Assert\NotNull()
      */
     protected $editableAll;
 
@@ -338,5 +349,40 @@ class Contact
     public function getEditableAll()
     {
         return $this->editableAll;
+    }
+
+    /**
+     * Add contactDetail
+     *
+     * @param \CoreBundle\Entity\ContactDetail $contactDetail
+     *
+     * @return Contact
+     */
+    public function addContactDetail(\CoreBundle\Entity\ContactDetail $contactDetail)
+    {
+        $contactDetail->setContact($this);
+        $this->contactDetails[] = $contactDetail;
+
+        return $this;
+    }
+
+    /**
+     * Remove contactDetail
+     *
+     * @param \CoreBundle\Entity\ContactDetail $contactDetail
+     */
+    public function removeContactDetail(\CoreBundle\Entity\ContactDetail $contactDetail)
+    {
+        $this->contactDetails->removeElement($contactDetail);
+    }
+
+    /**
+     * Get contactDetails
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getContactDetails()
+    {
+        return $this->contactDetails;
     }
 }
