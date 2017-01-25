@@ -1,6 +1,7 @@
 <?php
 
 namespace CoreBundle\Entity\Repository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * CompanyRepository
@@ -10,29 +11,51 @@ namespace CoreBundle\Entity\Repository;
  */
 class CompanyRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function search(array $query = [])
+
+
+    public function search(array $search = [])
     {
 
-        $rows = $this->getEntityManager()->createQueryBuilder()
-            ->select('c')
-            ->from('CoreBundle:Company', 'c');
+        if(!isset($search['page']) || $search['page'] <= 0) {
+            $page = 1;
+        } else {
+            $page = $search['page'];
+        }
 
-        if (!empty($query['query'])) {
-            $rows->orWhere('c.name like :query')
+        if(!isset($search['limit']) || $search['limit'] <= 0) {
+            $limit = 100;
+        } else {
+            $limit = $search['limit'];
+        }
+
+        $query = $this->createQueryBuilder('e')->select('e');
+
+        if (!empty($search['query'])) {
+            $query->orWhere('c.name like :query')
                 ->orWhere('c.description like :query')
                 ->setParameter('query', '%' . $query['query'] . '%');
         }
 
-        if (isset($query['orderBy']) && is_array($query['orderBy'])) {
-            foreach ($query['orderBy'] as $orderBy) {
+        if (isset($search['orderBy']) && is_array($search['orderBy'])) {
+            foreach ($search['orderBy'] as $orderBy) {
                 if (preg_match('/^(id|name|createdAt|updatedAt) (ASC|DESC)/', $orderBy)) {
                     list($column, $dir) = explode(' ', $orderBy);
-                    $rows->addOrderBy('c.' . $column, $dir);
+                    $query->addOrderBy('c.' . $column, $dir);
                 }
             }
         }
 
+        $paginator = new Paginator($query->getQuery());
 
-        return $rows->getQuery()->getResult();
+        $paginator->getQuery()
+            ->setFirstResult($limit * ($page - 1))
+            ->setMaxResults($limit);
+
+        return [
+            'data' => $paginator->getQuery()->getResult(),
+            'pagesCount' => (int) ceil($paginator->count() / $paginator->getQuery()->getMaxResults()),
+            'totalItems' => (int) $paginator->count(),
+        ];
     }
+
 }

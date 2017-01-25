@@ -25,7 +25,14 @@ class CompanyController extends BaseController
 {
 
     /**
-     * Search for an users. At least one field must be setted in order to use this method.
+     * Search for an Company.
+     * Please check below to see an example output:
+     *
+     *     {
+     *         "data": <Array of Company>,
+     *         "pagesCount": int,
+     *         "totalItems": int
+     *     }
      *
      * @Rest\Get("/")
      * @Rest\View(serializerGroups={"ROLE_USER","ROLE_ADMIN"})
@@ -42,16 +49,13 @@ class CompanyController extends BaseController
      *  resource="/api/company/",
      *  description="Search for a company",
      *  filters={
+     *      {"name"="page", "dataType"="int", "description"="Number of page to display"},
+     *      {"name"="limit", "dataType"="int", "description"="Results per page"},
      *      {"name"="query", "dataType"="string", "description"="Search for name or description containing a {query} value"},
      *      {"name"="orderBy[]", "dataType"="array", "pattern"="(id|name|createdAt|updatedAt) ASC|DESC"}
      *  },
      *
      *
-     *  output={
-     *   "class"="CoreBundle\Entity\Company",
-     *   "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"},
-     *   "groups"={"ROLE_USER","ROLE_ADMIN"}
-     *  }
      * )
      * @param Request $request
      * @return View
