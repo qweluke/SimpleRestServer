@@ -4,60 +4,81 @@ namespace CoreBundle\Entity\Repository;
 
 
 use CoreBundle\Entity\User;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function search(array $query = [])
+    public function search(array $search = [])
     {
+        if(!isset($search['page']) || $search['page'] <= 0) {
+            $page = 1;
+        } else {
+            $page = $search['page'];
+        }
 
-        $rows = $this->getEntityManager()->createQueryBuilder()
-            ->select('u')
-            ->from('CoreBundle:User', 'u');
+        if(!isset($search['limit']) || $search['limit'] <= 0) {
+            $limit = 100;
+        } else {
+            $limit = $search['limit'];
+        }
 
-        if (!empty($query['query'])) {
-            $rows->orWhere('u.username like :query')
+
+        $query = $this->createQueryBuilder('e')->select('e');
+
+        if (!empty($search['query'])) {
+            $query->orWhere('u.username like :query')
                 ->orWhere('u.firstName like :query')
                 ->orWhere('u.lastName like :query')
                 ->orWhere('u.email like :query')
-                ->setParameter('query', '%' . $query['query'] . '%');
+                ->setParameter($query->expr()->like('query', $search['query']));
         }
 
-        if (isset($query['role']) && in_array($query['role'], ['user', 'admin'])) {
-            switch ($query['role']) {
+
+        if (isset($search['role']) && in_array($search['role'], ['user', 'admin'])) {
+            switch ($search['role']) {
                 case 'admin':
-                    $rows->andWhere('u.roles like :role')->setParameter('role', '%ROLE_ADMIN%');
+                    $search->andWhere('u.roles like :role')->setParameter('role', '%ROLE_ADMIN%');
                     break;
                 case 'user':
-                    $rows->andWhere('u.roles not like :role')->setParameter('role', '%ROLE_ADMIN%');
+                    $search->andWhere('u.roles not like :role')->setParameter('role', '%ROLE_ADMIN%');
                     break;
             }
         }
 
-        if (isset($query['gender']) && in_array($query['gender'], ['male', 'female'])) {
-            $rows->andWhere('u.gender = :gender')->setParameter('gender', $query['gender']);
-        }
-
-        if (isset($query['active']) && in_array($query['active'], ['true', 'false'])) {
-            switch ($query['active']) {
-                case 'true':
-                    $rows->andWhere('u.enabled = 1');
-                    break;
-                case 'false':
-                    $rows->andWhere('u.enabled = 0');
-                    break;
-            }
-        }
-
-        if (isset($query['orderBy']) && is_array($query['orderBy'])) {
-            foreach ($query['orderBy'] as $orderBy) {
+        if (isset($search['orderBy']) && is_array($search['orderBy'])) {
+            foreach ($search['orderBy'] as $orderBy) {
                 if (preg_match('/^(id|firstName|lastName|gender) (ASC|DESC)/', $orderBy)) {
                     list($column, $dir) = explode(' ', $orderBy);
-                    $rows->addOrderBy('u.' . $column, $dir);
+                    $query->addOrderBy('u.' . $column, $dir);
                 }
             }
         }
 
+        if (isset($search['gender']) && in_array($search['gender'], ['male', 'female'])) {
+            $query->andWhere('u.gender = :gender')->setParameter('gender', $search['gender']);
+        }
 
-        return $rows->getQuery()->getResult();
+        if (isset($search['active']) && in_array($search['active'], ['true', 'false'])) {
+            switch ($search['active']) {
+                case 'true':
+                    $query->andWhere('u.enabled = 1');
+                    break;
+                case 'false':
+                    $query->andWhere('u.enabled = 0');
+                    break;
+            }
+        }
+
+        $paginator = new Paginator($query->getQuery());
+
+        $paginator->getQuery()
+            ->setFirstResult($limit * ($page - 1))
+            ->setMaxResults($limit);
+
+        return [
+            'data' => $paginator->getQuery()->getResult(),
+            'pagesCount' => (int) ceil($paginator->count() / $paginator->getQuery()->getMaxResults()),
+            'totalItems' => (int) $paginator->count(),
+        ];
     }
 }

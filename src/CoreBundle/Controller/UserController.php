@@ -26,6 +26,12 @@ class UserController extends BaseController
     /**
      * Search for an users. At least one field must be setted in order to use this method.
      *
+     *     {
+     *         "data": <Array of User>,
+     *         "pagesCount": int,
+     *         "totalItems": int
+     *     }
+     *
      * @Rest\Get("/")
      * @Rest\View(serializerGroups={"ROLE_USER","ROLE_ADMIN"})
      *
@@ -41,18 +47,13 @@ class UserController extends BaseController
      *  resource="/api/user/",
      *  description="Search for users",
      *  filters={
+     *      {"name"="page", "dataType"="int", "description"="Number of page to display"},
+     *      {"name"="limit", "dataType"="int", "description"="Results per page"},
      *      {"name"="query", "dataType"="string", "description"="Paraphrase to search for"},
      *      {"name"="orderBy[]", "dataType"="array", "pattern"="(id|firstName|lastName|gender) ASC|DESC"},
      *      {"name"="gender", "dataType"="string", "pattern"="(male|female)"},
      *      {"name"="role", "dataType"="string", "pattern"="(user|admin)"},
      *      {"name"="active", "dataType"="string", "pattern"="(true|false) "},
-     *  },
-     *
-     *
-     *  output={
-     *   "class"="CoreBundle\Entity\User",
-     *   "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"},
-     *   "groups"={"ROLE_USER","ROLE_ADMIN"}
      *  }
      * )
      * @param Request $request
