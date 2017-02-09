@@ -23,7 +23,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         }
 
 
-        $query = $this->createQueryBuilder('e')->select('e');
+        $query = $this->createQueryBuilder('u')->select('u');
 
         if (!empty($search['query'])) {
             $query->orWhere('u.username like :query')
@@ -37,10 +37,10 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         if (isset($search['role']) && in_array($search['role'], ['user', 'admin'])) {
             switch ($search['role']) {
                 case 'admin':
-                    $search->andWhere('u.roles like :role')->setParameter('role', '%ROLE_ADMIN%');
+                    $query->andWhere('u.roles like :role')->setParameter('role', '%ROLE_ADMIN%');
                     break;
                 case 'user':
-                    $search->andWhere('u.roles not like :role')->setParameter('role', '%ROLE_ADMIN%');
+                    $query->andWhere('u.roles not like :role')->setParameter('role', '%ROLE_ADMIN%');
                     break;
             }
         }
