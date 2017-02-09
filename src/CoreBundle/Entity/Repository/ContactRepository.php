@@ -1,6 +1,7 @@
 <?php
 
 namespace CoreBundle\Entity\Repository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * ContactRepository
@@ -13,27 +14,38 @@ class ContactRepository extends \Doctrine\ORM\EntityRepository
     public function search(array $query = [])
     {
 
-        $rows = $this->getEntityManager()->createQueryBuilder()
-            ->select('c')
-            ->from('CoreBundle:Contact', 'c');
+        if(!isset($search['page']) || $search['page'] <= 0) {
+            $page = 1;
+        } else {
+            $page = $search['page'];
+        }
 
-        if (!empty($query['query'])) {
-            $rows->orWhere('c.firstName like :query')
+        if(!isset($search['limit']) || $search['limit'] <= 0) {
+            $limit = 100;
+        } else {
+            $limit = $search['limit'];
+        }
+
+        $query = $this->createQueryBuilder('e')->select('e');
+
+        if (!empty($search['query'])) {
+            $query->orWhere('c.firstName like :query')
                 ->orWhere('c.lastName like :query')
                 ->orWhere('c.jobTitle like :query')
-                ->setParameter('query', '%' . $query['query'] . '%');
-        }
-
-        if (isset($query['orderBy']) && is_array($query['orderBy'])) {
-            foreach ($query['orderBy'] as $orderBy) {
-                if (preg_match('/^(id|firstName|lastName|jobTitle|company) (ASC|DESC)/', $orderBy)) {
-                    list($column, $dir) = explode(' ', $orderBy);
-                    $rows->addOrderBy('c.' . $column, $dir);
-                }
-            }
+                ->setParameter($query->expr()->like('query', $query['query']));
         }
 
 
-        return $rows->getQuery()->getResult();
+        $paginator = new Paginator($query->getQuery());
+
+        $paginator->getQuery()
+            ->setFirstResult($limit * ($page - 1))
+            ->setMaxResults($limit);
+
+        return [
+            'data' => $paginator->getQuery()->getResult(),
+            'pagesCount' => (int) ceil($paginator->count() / $paginator->getQuery()->getMaxResults()),
+            'totalItems' => (int) $paginator->count(),
+        ];
     }
 }

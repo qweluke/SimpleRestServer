@@ -28,6 +28,12 @@ class CompanyContactController extends BaseController
     /**
      * Search for an users. At least one field must be setted in order to use this method.
      *
+     *     {
+     *         "data": <Array of Contact>,
+     *         "pagesCount": int,
+     *         "totalItems": int
+     *     }
+     *
      * @Rest\Get("/")
      * @Rest\View(serializerGroups={"ROLE_USER","ROLE_ADMIN"})
      *
@@ -43,16 +49,11 @@ class CompanyContactController extends BaseController
      *  resource="/api/contact/",
      *  description="Search for a contact",
      *  filters={
+     *      {"name"="page", "dataType"="int", "description"="Number of page to display"},
+     *      {"name"="limit", "dataType"="int", "description"="Results per page"},
      *      {"name"="query", "dataType"="string", "description"="Search for firstName, lastName, jobTitle or company containing a {query} value"},
      *      {"name"="orderBy[]", "dataType"="array", "pattern"="(id|firstName|lastName|jobTitle|company) ASC|DESC"}
      *  },
-     *
-     *
-     *  output={
-     *   "class"="CoreBundle\Entity\Contact",
-     *   "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"},
-     *   "groups"={"ROLE_USER","ROLE_ADMIN"}
-     *  }
      * )
      * @param Request $request
      * @return View
