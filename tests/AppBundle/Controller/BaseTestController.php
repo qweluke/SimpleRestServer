@@ -10,10 +10,10 @@ class BaseTestController extends WebTestCase
     /**
      * Create a client with a default Authorization header.
      *
-     * @param string $username
-     * @param string $password
-     *
+     * @param $username
+     * @param $password
      * @return \Symfony\Bundle\FrameworkBundle\Client
+     * @throws \BadRequestHttpException
      */
     protected function createAuthenticatedClient($username, $password)
     {
@@ -28,6 +28,10 @@ class BaseTestController extends WebTestCase
         );
 
         $data = json_decode($client->getResponse()->getContent(), true);
+
+        if(!$data['token']) {
+            throw new \BadRequestHttpException('Unable to run test! Token not returned by API!');
+        }
 
         $client = static::createClient();
         $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
