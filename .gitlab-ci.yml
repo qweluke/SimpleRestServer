@@ -5,6 +5,18 @@ cache:
  paths:
    - vendor/
 
+before_script:
+- cp app/config/parameters.yml.dist app/config/parameters.gitlab.yml
+- ping -c 3 mysql
+- php -v
+- php bin/console doctrine:schema:create
+- php bin/console doctrine:fixtures:load --no-interaction
+
+#configuring LexitJWTAuth
+- mkdir var/jwt
+- openssl genrsa -out var/jwt/private.pem -passout pass:pleaseChangeMe -aes256 4096
+- openssl rsa -passin pass:pleaseChangeMe -pubout -in var/jwt/private.pem -out var/jwt/public.pem
+
 test70:
   stage: test
   image: melkorm/php-docker:7.0
