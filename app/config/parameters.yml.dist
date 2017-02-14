@@ -6,8 +6,8 @@ parameters:
     database_host:     db
     database_port:     ~
     database_name:     wizard_crm
-    database_user:
-    database_password:
+    database_user:     symfony
+    database_password: password
     # You should uncomment this if you want use pdo_sqlite
     # database_path: "%kernel.root_dir%/data.db3"
 
