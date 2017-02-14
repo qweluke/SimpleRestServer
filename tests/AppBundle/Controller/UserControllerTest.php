@@ -3,6 +3,8 @@
 namespace Tests\AppBundle\Controller;
 
 
+use CoreBundle\Entity\User;
+
 class UserControllerTest extends BaseTestController
 {
 
@@ -21,9 +23,10 @@ class UserControllerTest extends BaseTestController
         $this->client->request('GET', '/api/user/');
 
         $users = json_decode($this->client->getResponse()->getContent());
+
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertInternalType('array', $users);
-        $this->assertInternalType('object', $users[0]);
+        $this->assertInternalType('array', $users->data);
+        $this->assertInternalType('object', $users->data[0]);
     }
 
     /**
@@ -78,6 +81,9 @@ class UserControllerTest extends BaseTestController
 
         $response = json_decode($this->client->getResponse()->getContent());
 
+        /** @var $user CoreBundle:User */
+        $user = $response->data[0];
+
         $userData = [
             'email' => 'phpUnit_1@unit.local',
             'firstName' => 'Test PHP 1',
@@ -93,8 +99,8 @@ class UserControllerTest extends BaseTestController
 
         $user1 = parent::createAuthenticatedClient('user1', 'user1');
 
-        $user1->request('PATCH', '/api/user/' . $response[0]->id, $userData);
-        $this->client->request('PATCH', '/api/user/' . $response[0]->id, $userData);
+        $user1->request('PATCH', '/api/user/' . $user->id, $userData);
+        $this->client->request('PATCH', '/api/user/' . $user->id, $userData);
 
         $this->assertEquals(403, $user1->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isSuccessful());
@@ -114,8 +120,8 @@ class UserControllerTest extends BaseTestController
 
         $user1 = parent::createAuthenticatedClient('user1', 'user1');
 
-        $user1->request('DELETE', '/api/user/' . $response[0]->id);
-        $this->client->request('DELETE', '/api/user/' . $response[0]->id);
+        $user1->request('DELETE', '/api/user/' . $response->data[0]->id);
+        $this->client->request('DELETE', '/api/user/' . $response->data[0]->id);
 
         $this->assertEquals(403, $user1->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isSuccessful());

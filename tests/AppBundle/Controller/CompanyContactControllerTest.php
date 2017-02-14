@@ -22,8 +22,8 @@ class CompanyContactControllerTest extends BaseTestController
 
         $users = json_decode($this->client->getResponse()->getContent());
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertInternalType('array', $users);
-        $this->assertInternalType('object', $users[0]);
+        $this->assertInternalType('array', $users->data);
+        $this->assertInternalType('object', $users->data[0]);
     }
 
     /**
@@ -56,11 +56,11 @@ class CompanyContactControllerTest extends BaseTestController
 
         $response = json_decode($this->client->getResponse()->getContent());
 
-        $this->client->request('GET', '/api/contact/' . $response[0]->id);
+        $this->client->request('GET', '/api/contact/' . $response->data[0]->id);
 
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertInternalType('object', $response[0]);
+        $this->assertInternalType('object', $response->data[0]);
     }
 
     /**
@@ -86,8 +86,8 @@ class CompanyContactControllerTest extends BaseTestController
 
         $user1 = parent::createAuthenticatedClient('user1', 'user1');
 
-        $user1->request('PATCH', '/api/contact/' . $response[0]->id, $contactData);
-        $this->client->request('PATCH', '/api/contact/' . $response[0]->id, $contactData);
+        $user1->request('PATCH', '/api/contact/' . $response->data[0]->id, $contactData);
+        $this->client->request('PATCH', '/api/contact/' . $response->data[0]->id, $contactData);
 
         $this->assertEquals(403, $user1->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isSuccessful());
@@ -107,8 +107,8 @@ class CompanyContactControllerTest extends BaseTestController
 
         $user1 = parent::createAuthenticatedClient('user1', 'user1');
 
-        $user1->request('DELETE', '/api/contact/' . $response[0]->id);
-        $this->client->request('DELETE', '/api/contact/' . $response[0]->id);
+        $user1->request('DELETE', '/api/contact/' . $response->data[0]->id);
+        $this->client->request('DELETE', '/api/contact/' . $response->data[0]->id);
 
         $this->assertEquals(403, $user1->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isSuccessful());

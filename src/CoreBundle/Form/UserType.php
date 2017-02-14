@@ -54,7 +54,7 @@ class UserType extends AbstractType
                 ->add('lastName', TextType::class, [
                     'required' => $data['required']
                 ])
-                ->add('gender', ChoiceType::class, [
+                ->add('gender', GenderType::class, [
                     'required' => $data['required']
                 ])
                 ->add('birthDate', DateType::class, [

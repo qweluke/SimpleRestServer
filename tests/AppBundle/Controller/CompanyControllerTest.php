@@ -22,8 +22,8 @@ class CompanyControllerTest extends BaseTestController
 
         $users = json_decode($this->client->getResponse()->getContent());
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertInternalType('array', $users);
-        $this->assertInternalType('object', $users[0]);
+        $this->assertInternalType('array', $users->data);
+        $this->assertInternalType('object', $users->data[0]);
     }
 
     /**
@@ -49,15 +49,16 @@ class CompanyControllerTest extends BaseTestController
 
         $params = ['query' => 'Test PHP'];
         $this->client->request('GET', '/api/company/', $params);
+
         $this->assertTrue($this->client->getResponse()->isSuccessful());
 
         $response = json_decode($this->client->getResponse()->getContent());
 
-        $this->client->request('GET', '/api/company/' . $response[0]->id);
+        $this->client->request('GET', '/api/company/' . $response->data[0]->id);
 
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertInternalType('object', $response[0]);
+        $this->assertInternalType('object', $response->data[0]);
     }
 
     /**
@@ -74,11 +75,11 @@ class CompanyControllerTest extends BaseTestController
         $user1 = parent::createAuthenticatedClient('user1', 'user1');
 
 
-        $user1->request('PATCH', '/api/company/' . $response[0]->id, [
+        $user1->request('PATCH', '/api/company/' . $response->data[0]->id, [
             'description' => 'user1',
         ]);
 
-        $this->client->request('PATCH', '/api/company/' . $response[0]->id, [
+        $this->client->request('PATCH', '/api/company/' . $response->data[0]->id, [
             'description' => 'root',
         ]);
 
@@ -100,7 +101,7 @@ class CompanyControllerTest extends BaseTestController
         $contactData = [
             'firstName' => 'Test PHP',
             'lastName' => 'Unit',
-            'company' => $response[0]->id,
+            'company' => $response->data[0]->id,
             'jobTitle' => 'phpUnit',
             'birthDate' => '1987-01-01',
             'editableAll' => 1,
@@ -112,7 +113,7 @@ class CompanyControllerTest extends BaseTestController
 
         $user1 = parent::createAuthenticatedClient('user1', 'user1');
 
-        $user1->request('DELETE', '/api/company/' . $response[0]->id . '/' . $contact->id);
+        $user1->request('DELETE', '/api/company/' . $response->data[0]->id . '/' . $contact->id);
         $this->assertTrue($user1->getResponse()->isSuccessful());
     }
 
@@ -136,7 +137,7 @@ class CompanyControllerTest extends BaseTestController
             $contactData = [
                 'firstName' => 'Test PHP - ' . $i,
                 'lastName' => 'Unit',
-                'company' => $response[0]->id,
+                'company' => $response->data[0]->id,
                 'jobTitle' => 'phpUnit',
                 'birthDate' => '1987-01-01',
                 'editableAll' => 0,
@@ -147,7 +148,7 @@ class CompanyControllerTest extends BaseTestController
 
         $user1 = parent::createAuthenticatedClient('user1', 'user1');
 
-        $user1->request('DELETE', '/api/company/' . $response[0]->id);
+        $user1->request('DELETE', '/api/company/' . $response->data[0]->id);
         $this->assertTrue($user1->getResponse()->isSuccessful());
     }
 

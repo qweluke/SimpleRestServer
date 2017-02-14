@@ -18,16 +18,16 @@ class CompanyRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->createQueryBuilder('e')->select('e');
 
         if (!empty($search['query'])) {
-            $query->orWhere('c.name like :query')
-                ->orWhere('c.description like :query')
-                ->setParameter('query', '%' . $query['query'] . '%');
+            $query->orWhere('e.name like :query')
+                ->orWhere('e.description like :query')
+                ->setParameter('query', '%' . $search['query'] . '%');
         }
 
         if (isset($search['orderBy']) && is_array($search['orderBy'])) {
             foreach ($search['orderBy'] as $orderBy) {
                 if (preg_match('/^(id|name|createdAt|updatedAt) (ASC|DESC)/', $orderBy)) {
                     list($column, $dir) = explode(' ', $orderBy);
-                    $query->addOrderBy('c.' . $column, $dir);
+                    $query->addOrderBy('e.' . $column, $dir);
                 }
             }
         }
