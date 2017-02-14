@@ -6,7 +6,7 @@ cache:
    - vendor/
 
 before_script:
-- cp app/config/parameters.yml.dist app/config/parameters.gitlab.yml
+- mv app/config/parameters.gitlab.yml app/config/parameters.yml.dist
 - ping -c 3 mysql
 - php -v
 - php bin/console doctrine:schema:create
@@ -16,6 +16,15 @@ before_script:
 - mkdir var/jwt
 - openssl genrsa -out var/jwt/private.pem -passout pass:pleaseChangeMe -aes256 4096
 - openssl rsa -passin pass:pleaseChangeMe -pubout -in var/jwt/private.pem -out var/jwt/public.pem
+
+services:
+- mysql:latest
+
+variables:
+  # Configure mysql service (https://hub.docker.com/_/mysql/)
+  MYSQL_DATABASE: symfony
+  MYSQL_ROOT_PASSWORD: password
+
 
 test70:
   stage: test
