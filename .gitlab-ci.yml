@@ -36,13 +36,13 @@ variables:
 
 test70:
   stage: test
-  image: melkorm/php-docker:7.0
+  image: tetraweb/php:7.0
   script:
     - ./vendor/bin/phpunit
 
 pages:
   stage: deploy
-  image: melkorm/php-docker:7.0
+  image: tetraweb/php:7.0
   only:
     - master
   script:
