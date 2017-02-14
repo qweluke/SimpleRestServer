@@ -69,7 +69,7 @@ class UserController extends BaseController
         $em = $this->getDoctrine()->getManager();
 
 
-        $users = $em->getRepository(User::class)->search($request->query->all());
+        $users = $em->getRepository(User::class)->search($this->get('app.request_handler')->handle($request));
 
         $view
             ->setStatusCode(Codes::HTTP_OK)
@@ -142,7 +142,7 @@ class UserController extends BaseController
             'usernameCanonical' => $user->getUsernameCanonical()
         ]);
 
-        if($isNotUnique) {
+        if ($isNotUnique) {
             $form->get('username')->addError(new FormError('Username already taken'));
         }
 
@@ -261,12 +261,12 @@ class UserController extends BaseController
 
 
         $newUsername = $request->request->get('username');
-        if(isset($newUsername)) {
+        if (isset($newUsername)) {
             $isNotUnique = $em->getRepository(User::class)->findOneBy([
                 'usernameCanonical' => $user->getUsernameCanonical()
             ]);
 
-            if($isNotUnique) {
+            if ($isNotUnique) {
                 $editForm->get('username')->addError(new FormError('Username already taken'));
             }
         }

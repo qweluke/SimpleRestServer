@@ -68,7 +68,7 @@ class CompanyContactController extends BaseController
         $em = $this->getDoctrine()->getManager();
 
 
-        $users = $em->getRepository(Contact::class)->search($request->query->all());
+        $users = $em->getRepository(Contact::class)->search($this->get('app.request_handler')->handle($request));
 
         $view
             ->setStatusCode(Codes::HTTP_OK)

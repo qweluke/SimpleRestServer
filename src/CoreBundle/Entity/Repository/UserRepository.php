@@ -10,39 +10,29 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 {
     public function search(array $search = [])
     {
-        if(!isset($search['page']) || $search['page'] <= 0) {
-            $page = 1;
-        } else {
-            $page = $search['page'];
-        }
-
-        if(!isset($search['limit']) || $search['limit'] <= 0) {
-            $limit = 100;
-        } else {
-            $limit = $search['limit'];
-        }
-
-
         $query = $this->createQueryBuilder('u')->select('u');
 
         if (!empty($search['query'])) {
-            $query->orWhere('u.username like :query')
-                ->orWhere('u.firstName like :query')
-                ->orWhere('u.lastName like :query')
-                ->orWhere('u.email like :query')
-                ->setParameter($query->expr()->like('query', $search['query']));
+            $query->orWhere($query->expr()->orX(
+                $query->expr()->like('u.username', ':query'),
+                $query->expr()->like('u.firstName', ':query'),
+                $query->expr()->like('u.lastName', ':query'),
+                $query->expr()->like('u.email', ':query')
+            ))->setParameter('query', '%' . $search['query'] . '%');
         }
 
 
         if (isset($search['role']) && in_array($search['role'], ['user', 'admin'])) {
             switch ($search['role']) {
                 case 'admin':
-                    $query->andWhere('u.roles like :role')->setParameter('role', '%ROLE_ADMIN%');
+                    $query->andWhere($query->expr()->like('u.roles', ':role'));
                     break;
                 case 'user':
-                    $query->andWhere('u.roles not like :role')->setParameter('role', '%ROLE_ADMIN%');
+                    $query->andWhere($query->expr()->notLike('u.roles', ':role'));
                     break;
             }
+
+            $query->setParameter('role', '%ROLE_ADMIN%');
         }
 
         if (isset($search['orderBy']) && is_array($search['orderBy'])) {
@@ -72,8 +62,8 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         $paginator = new Paginator($query->getQuery());
 
         $paginator->getQuery()
-            ->setFirstResult($limit * ($page - 1))
-            ->setMaxResults($limit);
+            ->setFirstResult($search['limit'] * ($search['page'] - 1))
+            ->setMaxResults($search['limit']);
 
         return [
             'data' => $paginator->getQuery()->getResult(),

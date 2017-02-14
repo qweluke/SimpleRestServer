@@ -70,7 +70,7 @@ class CompanyController extends BaseController
         $em = $this->getDoctrine()->getManager();
 
 
-        $users = $em->getRepository(Company::class)->search($request->query->all());
+        $users = $em->getRepository(Company::class)->search($this->get('app.request_handler')->handle($request));
 
         $view
             ->setStatusCode(Codes::HTTP_OK)

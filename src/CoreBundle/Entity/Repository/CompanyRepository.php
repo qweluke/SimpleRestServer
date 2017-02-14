@@ -15,19 +15,6 @@ class CompanyRepository extends \Doctrine\ORM\EntityRepository
 
     public function search(array $search = [])
     {
-
-        if(!isset($search['page']) || $search['page'] <= 0) {
-            $page = 1;
-        } else {
-            $page = $search['page'];
-        }
-
-        if(!isset($search['limit']) || $search['limit'] <= 0) {
-            $limit = 100;
-        } else {
-            $limit = $search['limit'];
-        }
-
         $query = $this->createQueryBuilder('e')->select('e');
 
         if (!empty($search['query'])) {
@@ -48,8 +35,8 @@ class CompanyRepository extends \Doctrine\ORM\EntityRepository
         $paginator = new Paginator($query->getQuery());
 
         $paginator->getQuery()
-            ->setFirstResult($limit * ($page - 1))
-            ->setMaxResults($limit);
+            ->setFirstResult($search['limit'] * ($search['page'] - 1))
+            ->setMaxResults($search['limit']);
 
         return [
             'data' => $paginator->getQuery()->getResult(),

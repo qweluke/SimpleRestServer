@@ -56,6 +56,9 @@ services:
         tags:
            - { name: security.voter }
 
+    app.request_handler:
+        class: CoreBundle\Handler\RequestHandler
+
     validator.contactdetail:
         class: CoreBundle\Validator\Constraints\ContactDetailValidator
         arguments: ['@validator', '@libphonenumber.phone_number_util']

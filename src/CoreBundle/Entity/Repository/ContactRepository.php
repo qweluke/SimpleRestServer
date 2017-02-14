@@ -11,36 +11,23 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class ContactRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function search(array $query = [])
+    public function search(array $param = [])
     {
-
-        if(!isset($search['page']) || $search['page'] <= 0) {
-            $page = 1;
-        } else {
-            $page = $search['page'];
-        }
-
-        if(!isset($search['limit']) || $search['limit'] <= 0) {
-            $limit = 100;
-        } else {
-            $limit = $search['limit'];
-        }
-
         $query = $this->createQueryBuilder('e')->select('e');
 
         if (!empty($search['query'])) {
             $query->orWhere('c.firstName like :query')
                 ->orWhere('c.lastName like :query')
                 ->orWhere('c.jobTitle like :query')
-                ->setParameter($query->expr()->like('query', $query['query']));
+                ->setParameter('query', '%' . $param['query'] . '%');
         }
 
 
         $paginator = new Paginator($query->getQuery());
 
         $paginator->getQuery()
-            ->setFirstResult($limit * ($page - 1))
-            ->setMaxResults($limit);
+            ->setFirstResult($param['limit'] * ($param['page'] - 1))
+            ->setMaxResults($param['limit']);
 
         return [
             'data' => $paginator->getQuery()->getResult(),
