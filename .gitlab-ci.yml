@@ -21,7 +21,7 @@ before_script:
 - php bin/console doctrine:fixtures:load --no-interaction
 
 #configuring LexitJWTAuth
-- mkdir var/jwt
+- rm -r var/jwt; mkdir var/jwt
 - openssl genrsa -out var/jwt/private.pem -passout pass:pleaseChangeMe -aes256 4096
 - openssl rsa -passin pass:pleaseChangeMe -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 
