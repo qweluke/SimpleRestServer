@@ -6,6 +6,13 @@ cache:
    - vendor/
 
 before_script:
+# Install mysql driver
+- docker-php-ext-install pdo_mysql
+
+# Install composer
+- curl -sS https://getcomposer.org/installer | php
+
+# Install all project dependencies
 - mv app/config/parameters.gitlab.yml app/config/parameters.yml.dist
 - ping -c 3 mysql
 - php -v
@@ -17,6 +24,7 @@ before_script:
 - openssl genrsa -out var/jwt/private.pem -passout pass:pleaseChangeMe -aes256 4096
 - openssl rsa -passin pass:pleaseChangeMe -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 
+
 services:
 - mysql:latest
 
@@ -25,6 +33,9 @@ variables:
   MYSQL_DATABASE: symfony
   MYSQL_ROOT_PASSWORD: password
 
+test:mysql:
+  script:
+  - vendor/bin/phpunit --configuration phpunit.xml --coverage-text
 
 test70:
   stage: test
