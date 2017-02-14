@@ -16,6 +16,7 @@ before_script:
 - mv app/config/parameters.gitlab.yml app/config/parameters.yml.dist
 - ping -c 3 mysql
 - php -v
+- composer install
 - php bin/console doctrine:schema:create
 - php bin/console doctrine:fixtures:load --no-interaction
 
@@ -33,23 +34,15 @@ variables:
   MYSQL_DATABASE: symfony
   MYSQL_ROOT_PASSWORD: password
 
-test:mysql:
-  script:
-  - vendor/bin/phpunit --configuration phpunit.xml --coverage-text
-
 test70:
   stage: test
   image: melkorm/php-docker:7.0
-  before_script:
-    - composer install
   script:
     - ./vendor/bin/phpunit
 
 pages:
   stage: deploy
   image: melkorm/php-docker:7.0
-  before_script:
-    - composer install
   only:
     - master
   script:
