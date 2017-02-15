@@ -98,7 +98,24 @@ class CompanyContactControllerTest extends BaseTestController
         $this->assertEquals(403, $user1->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isSuccessful());
 
+        /** test wrong contact data */
         $this->client->request('PATCH', '/api/contact/' . $response->data[0]->id, ['editableAll' => 3]);
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
+
+
+        /** test wrong contact details */
+        $wrongContactData = [
+            'lastName' => 'Unit new',
+            'jobTitle' => 'php developer',
+            'birthDate' => '1988-01-01',
+            'contactDetails' => [
+                ['type' => 'PHONE', 'value' => 'wrongNumber'],
+                ['type' => 'MOBILE', 'value' => 'wrongNumber'],
+                ['type' => 'EMAIL', 'value' => '123000']
+            ]
+        ];
+
+        $this->client->request('PATCH', '/api/contact/' . $response->data[0]->id,$wrongContactData);
         $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
     }
 
