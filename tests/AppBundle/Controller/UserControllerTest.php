@@ -21,7 +21,7 @@ class UserControllerTest extends BaseTestController
     public function testGetUsers()
     {
         $url = http_build_query(['page' => 1, 'limit' => 100]);
-        $this->client->request('GET', '/api/user/?' . $url );
+        $this->client->request('GET', '/api/user/?' . $url);
 
         $users = json_decode($this->client->getResponse()->getContent());
 
@@ -72,7 +72,9 @@ class UserControllerTest extends BaseTestController
     public function testGetUser()
     {
 
-        $params = ['query' => 'phpUnit'];
+        $params = [
+            'query' => 'phpUnit', 'role' => 'user', 'orderBy' => 'id DESC', 'gender' => 'male', 'active' => 'true'
+        ];
         $this->client->request('GET', '/api/user/', $params);
         $response = json_decode($this->client->getResponse()->getContent());
         $user = $response->data[0];

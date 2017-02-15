@@ -263,8 +263,4 @@ class User extends BaseUser
         return $this->birthDate;
     }
 
-    public function __toString()
-    {
-        return (int) $this->getId();
-    }
 }
