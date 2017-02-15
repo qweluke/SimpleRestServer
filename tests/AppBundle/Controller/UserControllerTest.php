@@ -20,7 +20,7 @@ class UserControllerTest extends BaseTestController
      */
     public function testGetUsers()
     {
-        $this->client->request('GET', '/api/user/');
+        $this->client->request('GET', '/api/user/', ['page' => 1, 'limit' => 100]);
 
         $users = json_decode($this->client->getResponse()->getContent());
 
@@ -153,7 +153,6 @@ class UserControllerTest extends BaseTestController
         $this->assertTrue($user1->getResponse()->isSuccessful());
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
-
 
 
 }
