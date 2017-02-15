@@ -42,6 +42,11 @@ class CompanyContactControllerTest extends BaseTestController
         $this->client->request('POST', '/api/contact/new', $contactData);
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
+
+        $this->client->request('POST', '/api/contact/new', []);
+
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
+
     }
 
     /**
@@ -91,6 +96,9 @@ class CompanyContactControllerTest extends BaseTestController
 
         $this->assertEquals(403, $user1->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isSuccessful());
+
+        $this->client->request('PATCH', '/api/contact/' . $response->data[0]->id, ['editableAll' => 3]);
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
     }
 
     /**
