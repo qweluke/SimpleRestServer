@@ -38,7 +38,7 @@ test70:
   stage: test
   image: tetraweb/php:7.0
   script:
-    - ./vendor/bin/phpunit
+    - ./vendor/bin/phpunit --verbose --tap
 
 pages:
   stage: deploy
