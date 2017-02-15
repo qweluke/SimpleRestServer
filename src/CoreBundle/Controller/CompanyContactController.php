@@ -248,6 +248,7 @@ class CompanyContactController extends BaseController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
+
             $this->getDoctrine()->getManager()->merge($contact);
             $this->getDoctrine()->getManager()->flush();
             $view
