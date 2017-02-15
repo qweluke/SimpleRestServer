@@ -30,18 +30,6 @@ class UserControllerTest extends BaseTestController
     }
 
     /**
-     * GET /api/user/{user}
-     */
-    public function testGetUser()
-    {
-        $this->client->request('GET', '/api/user/1');
-
-        $user = json_decode($this->client->getResponse()->getContent());
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertInternalType('object', $user);
-    }
-
-    /**
      * /api/user/new
      */
     public function testNewUser()
@@ -68,6 +56,24 @@ class UserControllerTest extends BaseTestController
         $this->assertEquals(403, $user1->getResponse()->getStatusCode());
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
+    }
+
+    /**
+     * GET /api/user/{user}
+     */
+    public function testGetUser()
+    {
+
+        $params = ['query' => 'phpUnit'];
+        $this->client->request('GET', '/api/user/', $params);
+        $response = json_decode($this->client->getResponse()->getContent());
+        $user = $response->data[0];
+
+        $this->client->request('GET', '/api/user/' . $user->id);
+
+        $user = json_decode($this->client->getResponse()->getContent());
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->assertInternalType('object', $user);
     }
 
     /**

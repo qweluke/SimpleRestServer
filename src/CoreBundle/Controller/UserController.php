@@ -136,7 +136,6 @@ class UserController extends BaseController
 
 
         $em = $this->getDoctrine()->getManager();
-        $em->getFilters()->disable('softdeleteable');
 
         $isNotUnique = $em->getRepository(User::class)->findOneBy([
             'usernameCanonical' => $user->getUsernameCanonical()
@@ -257,7 +256,6 @@ class UserController extends BaseController
         $editForm->submit($request->request->all(), false);
 
         $em = $this->getDoctrine()->getManager();
-        $em->getFilters()->disable('softdeleteable');
 
 
         $newUsername = $request->request->get('username');
