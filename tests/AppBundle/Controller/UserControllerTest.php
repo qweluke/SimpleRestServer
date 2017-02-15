@@ -20,7 +20,8 @@ class UserControllerTest extends BaseTestController
      */
     public function testGetUsers()
     {
-        $this->client->request('GET', '/api/user/', ['page' => 1, 'limit' => 100]);
+        $url = http_build_query(['page' => 1, 'limit' => 100]);
+        $this->client->request('GET', '/api/user/?' . $url );
 
         $users = json_decode($this->client->getResponse()->getContent());
 

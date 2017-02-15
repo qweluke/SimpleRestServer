@@ -20,7 +20,7 @@ class RequestHandler
         if (!isset($data['page']) || $data['page'] <= 0) {
             $page = 1;
         } else {
-            $page = $request['page'];
+            $page = $data['page'];
         }
 
         if (!isset($data['limit']) || $data['limit'] <= 0) {
