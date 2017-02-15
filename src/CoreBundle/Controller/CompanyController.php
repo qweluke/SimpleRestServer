@@ -288,15 +288,16 @@ class CompanyController extends BaseController
                     'success' => true,
                     'message' => 'Company successfully deleted.'
                 ]);
-        } else {
-            $view
-                ->setStatusCode(Codes::HTTP_BAD_REQUEST)
-                ->setData([
-                    'success' => false,
-                    'message' => 'Unable to delete Company.',
-                    'exception' => $this->getFormErrors($form)
-                ]);
         }
+//        else {
+//            $view
+//                ->setStatusCode(Codes::HTTP_BAD_REQUEST)
+//                ->setData([
+//                    'success' => false,
+//                    'message' => 'Unable to delete Company.',
+//                    'exception' => $this->getFormErrors($form)
+//                ]);
+//        }
 
         return $this->handleView($view);
     }

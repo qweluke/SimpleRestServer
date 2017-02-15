@@ -317,15 +317,16 @@ class CompanyContactController extends BaseController
                     'success' => true,
                     'message' => 'Contact successfully deleted.'
                 ]);
-        } else {
-            $view
-                ->setStatusCode(Codes::HTTP_BAD_REQUEST)
-                ->setData([
-                    'success' => false,
-                    'message' => 'Unable to delete Contact.',
-                    'exception' => $this->getFormErrors($form)
-                ]);
         }
+//        else {
+//            $view
+//                ->setStatusCode(Codes::HTTP_BAD_REQUEST)
+//                ->setData([
+//                    'success' => false,
+//                    'message' => 'Unable to delete Contact.',
+//                    'exception' => $this->getFormErrors($form)
+//                ]);
+//        }
 
         return $this->handleView($view);
     }
