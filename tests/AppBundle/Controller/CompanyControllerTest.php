@@ -39,6 +39,9 @@ class CompanyControllerTest extends BaseTestController
         $this->client->request('POST', '/api/company/new', $data);
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
+
+        $this->client->request('POST', '/api/company/new', []);
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
     }
 
     /**
@@ -85,6 +88,9 @@ class CompanyControllerTest extends BaseTestController
 
         $this->assertTrue($user1->getResponse()->isSuccessful());
         $this->assertTrue($this->client->getResponse()->isSuccessful());
+
+        $this->client->request('PATCH', '/api/company', ['name' => ' ']);
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
     }
 
     /**
