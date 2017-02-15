@@ -35,6 +35,7 @@ class CompanyContactControllerTest extends BaseTestController
             'firstName' => 'Test PHP',
             'lastName' => 'Unit',
             'jobTitle' => 'phpUnit',
+            'gender' => 'male',
             'birthDate' => '1987-01-01',
             'editableAll' => 0,
         ];
@@ -121,7 +122,6 @@ class CompanyContactControllerTest extends BaseTestController
         $this->assertEquals(403, $user1->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
-
 
 
 }

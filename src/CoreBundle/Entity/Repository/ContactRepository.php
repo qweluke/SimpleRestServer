@@ -15,10 +15,10 @@ class ContactRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->createQueryBuilder('e')->select('e');
 
-        if (!empty($search['query'])) {
-            $query->orWhere('c.firstName like :query')
-                ->orWhere('c.lastName like :query')
-                ->orWhere('c.jobTitle like :query')
+        if (!empty($param['query'])) {
+            $query->orWhere('e.firstName like :query')
+                ->orWhere('e.lastName like :query')
+                ->orWhere('e.jobTitle like :query')
                 ->setParameter('query', '%' . $param['query'] . '%');
         }
 

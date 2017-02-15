@@ -307,6 +307,7 @@ class CompanyContactController extends BaseController
         $form->submit($request->request->get($form->getName()));
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
             $em->remove($contact);
             $em->flush();

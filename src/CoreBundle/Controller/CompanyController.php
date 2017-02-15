@@ -302,7 +302,8 @@ class CompanyController extends BaseController
     }
 
     /**
-     * Deletes a Company contact.
+     * Deletes a contact association from Company. Using this method contact will be still in database but without any assignation.
+     * If you want to delete permamently it, pease use contact/{contact} delete method.
      *
      * @Rest\Delete( "/{company}/{contact}", requirements={
      *     "company" = "\d+",
