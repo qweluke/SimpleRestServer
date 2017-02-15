@@ -20,6 +20,9 @@ before_script:
 - php bin/console doctrine:schema:create
 - php bin/console doctrine:fixtures:load --no-interaction
 
+# remove cache folders
+- rm -r var/cache/
+
 #configuring LexitJWTAuth
 - rm -r var/jwt; mkdir var/jwt
 - openssl genrsa -out var/jwt/private.pem -passout pass:pleaseChangeMe -aes256 4096

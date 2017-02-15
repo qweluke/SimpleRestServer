@@ -7,8 +7,6 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation as JMS;
@@ -19,7 +17,6 @@ use JMS\Serializer\Annotation\Accessor;
  *
  * @ORM\Table(name="user")
  *
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ExclusionPolicy("all")
  *
  * @UniqueEntity("email")
@@ -32,7 +29,6 @@ class User extends BaseUser
      * Hook SoftDeleteable behavior
      * updates deletedAt field
      */
-    use SoftDeleteableEntity;
     use Timestampable;
 
     /**
