@@ -44,9 +44,6 @@
 /app/phpunit.xml
 /phpunit.xml
 
-# Build data
-/build/
-
 # Composer PHAR
 /composer.phar
 
