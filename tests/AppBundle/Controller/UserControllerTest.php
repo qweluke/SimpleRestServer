@@ -57,6 +57,13 @@ class UserControllerTest extends BaseTestController
         $this->assertEquals(403, $user1->getResponse()->getStatusCode());
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
+
+        /** try to add new user with existing username */
+
+        $newData = $userData;
+        $newData['username'] = 'root';
+        $this->client->request('POST', '/api/user/new', $newData);
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
     }
 
     /**
@@ -111,6 +118,9 @@ class UserControllerTest extends BaseTestController
 
         $this->assertEquals(403, $user1->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isSuccessful());
+
+        $this->client->request('PATCH', '/api/user/' . $user->id, ['username' => 'root']);
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
     }
 
     /**
@@ -153,6 +163,15 @@ class UserControllerTest extends BaseTestController
 
         $this->assertTrue($user1->getResponse()->isSuccessful());
         $this->assertTrue($this->client->getResponse()->isSuccessful());
+
+        /** test sending wrong data */
+
+        $wrongData = $userData;
+        $wrongData['email'] = 'robot';
+
+
+        $this->client->request('PATCH', '/api/user/', $wrongData);
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
     }
 
 
