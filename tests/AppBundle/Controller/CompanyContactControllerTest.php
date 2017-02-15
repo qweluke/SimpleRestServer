@@ -64,7 +64,7 @@ class CompanyContactControllerTest extends BaseTestController
     }
 
     /**
-     * PATCH /api/user/{user}
+     * PATCH /api/contact/{user}
      */
     public function testPatchContact()
     {

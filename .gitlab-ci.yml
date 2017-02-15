@@ -50,7 +50,7 @@ pages:
     - master
   script:
     - ./vendor/bin/phpmetrics --report-html=build/phpmetrics/index.html src/
-#    - ./vendor/bin/phpunit --coverage-html build/phpunit/
+    - ./vendor/bin/phpunit --coverage-html build/phpunit/
   artifacts:
     paths:
     - public
