@@ -52,7 +52,7 @@ pages:
     - ./vendor/bin/phpmetrics --version
     - ./vendor/bin/phpmetrics --report-html=build/phpmetrics/index.html src/
     - ./vendor/bin/phpunit --coverage-html build/phpunit/ -d memory_limit=1G
-    - ./vendor/bin/phpunit --coverage-text -d memory_limit=1G
+#    - ./vendor/bin/phpunit --coverage-text -d memory_limit=1G
     - cp -r build/ public/
   artifacts:
     paths:
