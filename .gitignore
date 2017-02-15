@@ -195,3 +195,4 @@ composer.phar
 # composer.lock
 
 docker-compose/logs/
+var/cache/
