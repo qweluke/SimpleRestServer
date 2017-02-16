@@ -93,7 +93,7 @@ class Contact
      * @Assert\Valid()
      *
      * @ORM\OneToMany(targetEntity="CoreBundle\Entity\ContactDetail", mappedBy="contact", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\JoinColumn(name="contact", referencedColumnName="id")
+     * @ORM\JoinColumn(name="contact", referencedColumnName="id", onDelete="CASCADE")
      * @Expose
      * @JMS\Groups({"ROLE_USER","ROLE_ADMIN"})
      */

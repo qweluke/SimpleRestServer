@@ -60,6 +60,7 @@ class ContactFormType extends AbstractType
             ->add('contactDetails', CollectionType::class, [
                 'entry_type' => ContactDetailFormType::class,
                 'allow_add'    => true,
+                'by_reference' => false,
                 'allow_delete' => true,
                 'required' => false
             ])

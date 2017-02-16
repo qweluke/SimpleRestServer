@@ -4,6 +4,7 @@ namespace CoreBundle\Controller;
 
 use CoreBundle\Entity\Company;
 use CoreBundle\Entity\Contact;
+use CoreBundle\Entity\ContactDetail;
 use CoreBundle\Form as Forms;
 use CoreBundle\Security\CompanyContactVoter;
 use FOS\RestBundle\View\View;
@@ -247,7 +248,6 @@ class CompanyContactController extends BaseController
 
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-
 
             $this->getDoctrine()->getManager()->merge($contact);
             $this->getDoctrine()->getManager()->flush();

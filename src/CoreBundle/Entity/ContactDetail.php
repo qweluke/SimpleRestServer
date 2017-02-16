@@ -38,6 +38,7 @@ class ContactDetail
     private $id;
 
     /**
+     * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Contact")
      * @ORM\JoinColumn(name="contact", referencedColumnName="id")
      */

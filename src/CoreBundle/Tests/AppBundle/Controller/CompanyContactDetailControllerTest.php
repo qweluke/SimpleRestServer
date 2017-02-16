@@ -87,6 +87,7 @@ class CompanyContactDetailControllerTest extends BaseTestController
         /** test email field */
         $this->client->request('POST', '/api/contact/' . $contact->id . '/detail/new', $contactData[0]);
         $response = json_decode($this->client->getResponse()->getContent());
+
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertInternalType('object', $response);
 

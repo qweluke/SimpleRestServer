@@ -71,14 +71,13 @@ class CompanyContactDetailsController extends BaseController
             );
 
         $contactDetail = new ContactDetail();
+        $contactDetail->setContact($contact);
         $form = $this->createForm(Forms\ContactDetailFormType::class, $contactDetail);
+
         $form->submit($request->request->all());
-
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
 
-            $contactDetail->setContact($contact);
+            $em = $this->getDoctrine()->getManager();
             $em->persist($contactDetail);
             $em->flush();
 
@@ -90,8 +89,8 @@ class CompanyContactDetailsController extends BaseController
                 ->setStatusCode(Codes::HTTP_BAD_REQUEST)
                 ->setData([
                     'success' => false,
-                    'message' => 'Unable to create new contact.',
-                    'exception' => (string) $form->getErrors(true, false)
+                    'message' => 'Unable to create new contact detail.',
+                    'exception' => $this->getFormErrors($form)
                 ]);
         }
 
