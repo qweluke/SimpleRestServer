@@ -1,9 +1,7 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace CoreBundle\Tests\AppBundle\Controller;
 
-
-use CoreBundle\Entity\User;
 
 class UserControllerTest extends BaseTestController
 {

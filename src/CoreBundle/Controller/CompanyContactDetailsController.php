@@ -18,6 +18,7 @@ use FOS\RestBundle\Util\Codes;
 use JMS\Serializer\SerializationContext;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Company controller.
@@ -253,7 +254,7 @@ class CompanyContactDetailsController extends BaseController
             );
 
         if(!$contact->getContactDetails()->contains($detail)) {
-            throw new \Exception('ContactDetail not belongs to the given Contact');
+            throw new BadRequestHttpException('ContactDetail not belongs to the given Contact');
         }
 
         $form = $this->createFormBuilder()->setMethod('DELETE')->getForm();

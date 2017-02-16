@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace CoreBundle\Tests\AppBundle\Controller;
 
 
 class CompanyControllerTest extends BaseTestController
