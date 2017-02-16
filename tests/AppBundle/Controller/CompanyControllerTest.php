@@ -110,17 +110,27 @@ class CompanyControllerTest extends BaseTestController
             'company' => $response->data[0]->id,
             'jobTitle' => 'phpUnit',
             'birthDate' => '1987-01-01',
-            'editableAll' => 1,
+            'editableAll' => 0,
         ];
 
         $this->client->request('POST', '/api/contact/new', $contactData);
 
         $contact = json_decode($this->client->getResponse()->getContent());
 
-        $user1 = parent::createAuthenticatedClient('user1', 'user1');
+        $user2 = parent::createAuthenticatedClient('user2', 'user2');
 
-        $user1->request('DELETE', '/api/company/' . $response->data[0]->id . '/' . $contact->id);
-        $this->assertTrue($user1->getResponse()->isSuccessful());
+        /** editableAll - false  */
+        $user2->request('DELETE', '/api/company/' . $response->data[0]->id . '/' . $contact->id);
+        $this->assertEquals(403, $user2->getResponse()->getStatusCode());
+
+        /** editableAll - true  */
+        $contactData['editableAll'] = 1;
+        $this->client->request('POST', '/api/contact/new', $contactData);
+        $contact = json_decode($this->client->getResponse()->getContent());
+
+
+        $user2->request('DELETE', '/api/company/' . $response->data[0]->id . '/' . $contact->id);
+        $this->assertTrue($user2->getResponse()->isSuccessful());
     }
 
     /**
