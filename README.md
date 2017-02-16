@@ -13,6 +13,7 @@ REST server
 
 #####Requirements:
 - PHP 7
+- MySQL 5.7 or MariaDB
 
 #####How to start:
 - clone this repo
@@ -29,5 +30,9 @@ What you can:
 2. User
   - CRUD commands for USER
   - Search for an user
+  - CRUD commands for company contacts
+  - search for an company contact
+  - CRUD commands for company
+  - search for a company
 
 ######Please note: this is only a server, you need your client to use it.
