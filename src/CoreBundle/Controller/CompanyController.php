@@ -239,7 +239,7 @@ class CompanyController extends BaseController
                 ->setStatusCode(Codes::HTTP_BAD_REQUEST)
                 ->setData([
                     'success' => false,
-                    'message' => 'Unable to update contact.',
+                    'message' => 'Unable to update company.',
                     'exception' => $this->getFormErrors($editForm)]);
         }
 

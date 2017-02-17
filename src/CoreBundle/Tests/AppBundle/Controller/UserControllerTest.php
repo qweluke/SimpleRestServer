@@ -18,7 +18,7 @@ class UserControllerTest extends BaseTestController
      */
     public function testGetUsers()
     {
-        $url = http_build_query(['page' => 1, 'limit' => 100]);
+        $url = http_build_query(['page' => 1, 'limit' => 100, 'orderBy'=>'firstName DESC']);
         $this->client->request('GET', '/api/user/?' . $url);
 
         $users = json_decode($this->client->getResponse()->getContent());
@@ -26,6 +26,18 @@ class UserControllerTest extends BaseTestController
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertInternalType('array', $users->data);
         $this->assertInternalType('object', $users->data[0]);
+
+        /** search for inactive admin user */
+
+        $url = http_build_query(['page' => 1, 'limit' => 100, 'role' => 'admin' ,'active' => 'false']);
+        $this->client->request('GET', '/api/user/?' . $url);
+
+        $response = json_decode($this->client->getResponse()->getContent());
+
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->assertInternalType('object', $response);
+        $this->assertInternalType('array', $response->data);
+        $this->assertEmpty($response->data);
     }
 
     /**
