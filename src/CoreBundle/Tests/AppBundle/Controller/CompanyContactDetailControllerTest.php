@@ -141,6 +141,37 @@ class CompanyContactDetailControllerTest extends BaseTestController
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertInternalType('object', $response);
+
+        /** try to patch contact with wrong data */
+        $this->client->request(
+            'PATCH',
+            '/api/contact/' . $contact->id . '/detail/' . $contact->contactDetails[0]->id,
+            [
+                'type' => 'WRONG',
+                'value' => 'update@outlook.com'
+            ]
+        );
+
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
+
+
+        /** try to patch contact detail from different contact than submitted */
+
+        $this->client->request('GET', '/api/contact/', []);
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $response = json_decode($this->client->getResponse()->getContent());
+        $randomContact = $response->data[0]->contactDetails[0]->id;
+
+        $this->client->request(
+            'PATCH',
+            '/api/contact/' . $contact->id . '/detail/' . $randomContact,
+            [
+                'type' => 'EMAIL',
+                'value' => 'update@outlook.com'
+            ]
+        );
+
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
     }
 
 

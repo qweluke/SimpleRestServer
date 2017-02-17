@@ -190,7 +190,7 @@ class CompanyContactDetailsController extends BaseController
         $editForm->submit($request->request->all(), false);
 
         if(!$contact->getContactDetails()->contains($detail)) {
-            throw new \Exception('ContactDetail not belongs to the given Contact');
+            throw new BadRequestHttpException('ContactDetail not belongs to the given Contact');
         }
 
 
