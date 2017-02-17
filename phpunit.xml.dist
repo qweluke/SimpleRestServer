@@ -22,7 +22,7 @@
         <whitelist>
             <directory>src</directory>
             <exclude>
-                <directory>src/*Bundle/Controller/SecurityController</directory>
+                <file>src/*Bundle/Controller/SecurityController</file>
                 <directory>src/*Bundle/Traits</directory>
                 <directory>src/*Bundle/Tests</directory>
                 <directory>src/*Bundle/DataFixtures</directory>
