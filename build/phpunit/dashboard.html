@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /home/luke/wwwdata/nauka/angular/smd2/server/src/CoreBundle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/nv.d3.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+ </head>
+ <body>
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="index.html">/home/luke/wwwdata/nauka/angular/smd2/server/src/CoreBundle</a></li>
+        <li class="active">(Dashboard)</li>
+
+      </ol>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Handler/ExceptionWrapperHandler.php.html#13">ExceptionWrapperHandler</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Utils/FileUploader.php.html#8">FileUploader</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Company.php.html#19">Company</a></td><td class="text-right">73%</td></tr>
+       <tr><td><a href="Security/CompanyContactVoter.php.html#20">CompanyContactVoter</a></td><td class="text-right">85%</td></tr>
+       <tr><td><a href="Entity/Contact.php.html#22">Contact</a></td><td class="text-right">87%</td></tr>
+       <tr><td><a href="Entity/Repository/UserRepository.php.html#9">UserRepository</a></td><td class="text-right">89%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Entity/Repository/UserRepository.php.html#9">UserRepository</a></td><td class="text-right">16</td></tr>
+       <tr><td><a href="Security/CompanyContactVoter.php.html#20">CompanyContactVoter</a></td><td class="text-right">11</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Entity/Company.php.html#142"><abbr title="Company::addContact">addContact</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Company.php.html#165"><abbr title="Company::getContacts">getContacts</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Contact.php.html#289"><abbr title="Contact::setImage">setImage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Contact.php.html#374"><abbr title="Contact::removeContactDetail">removeContactDetail</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/ContactDetail.php.html#143"><abbr title="ContactDetail::getContact">getContact</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Handler/ExceptionWrapperHandler.php.html#15"><abbr title="ExceptionWrapperHandler::wrap">wrap</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Utils/FileUploader.php.html#12"><abbr title="FileUploader::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Utils/FileUploader.php.html#17"><abbr title="FileUploader::upload">upload</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Security/CompanyContactVoter.php.html#35"><abbr title="CompanyContactVoter::supports">supports</abbr></a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Security/CompanyContactVoter.php.html#49"><abbr title="CompanyContactVoter::voteOnAttribute">voteOnAttribute</abbr></a></td><td class="text-right">81%</td></tr>
+       <tr><td><a href="Entity/Repository/UserRepository.php.html#11"><abbr title="UserRepository::search">search</abbr></a></td><td class="text-right">89%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Entity/Repository/UserRepository.php.html#11"><abbr title="UserRepository::search">search</abbr></a></td><td class="text-right">16</td></tr>
+       <tr><td><a href="Security/CompanyContactVoter.php.html#49"><abbr title="CompanyContactVoter::voteOnAttribute">voteOnAttribute</abbr></a></td><td class="text-right">5</td></tr>
+       <tr><td><a href="Security/CompanyContactVoter.php.html#35"><abbr title="CompanyContactVoter::supports">supports</abbr></a></td><td class="text-right">3</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 4.0.5</a> using <a href="https://secure.php.net/" target="_top">PHP 7.0.13-0ubuntu0.16.04.1</a> with <a href="https://xdebug.org/">Xdebug 2.4.0</a> and <a href="https://phpunit.de/">PHPUnit 5.7.13</a> at Fri Feb 17 11:26:49 UTC 2017.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="js/jquery.min.js" type="text/javascript"></script>
+  <script src="js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="js/holder.min.js" type="text/javascript"></script>
+  <script src="js/d3.min.js" type="text/javascript"></script>
+  <script src="js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([2,0,0,0,0,0,0,0,1,3,1,18], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([8,0,0,0,0,0,0,0,0,3,0,93], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[100,5,"<a href=\"Controller\/BaseController.php.html#8\">BaseController<\/a>"],[100,13,"<a href=\"Controller\/CompanyContactController.php.html#26\">CompanyContactController<\/a>"],[100,12,"<a href=\"Controller\/CompanyContactDetailsController.php.html#28\">CompanyContactDetailsController<\/a>"],[100,14,"<a href=\"Controller\/CompanyController.php.html#24\">CompanyController<\/a>"],[100,17,"<a href=\"Controller\/UserController.php.html#23\">UserController<\/a>"],[100,0,"<a href=\"CoreBundle.php.html#7\">CoreBundle<\/a>"],[73.333333333333,9,"<a href=\"Entity\/Company.php.html#19\">Company<\/a>"],[87.878787878788,21,"<a href=\"Entity\/Contact.php.html#22\">Contact<\/a>"],[90,7,"<a href=\"Entity\/ContactDetail.php.html#21\">ContactDetail<\/a>"],[100,6,"<a href=\"Entity\/Repository\/CompanyRepository.php.html#12\">CompanyRepository<\/a>"],[100,2,"<a href=\"Entity\/Repository\/ContactRepository.php.html#12\">ContactRepository<\/a>"],[89.74358974359,16,"<a href=\"Entity\/Repository\/UserRepository.php.html#9\">UserRepository<\/a>"],[100,9,"<a href=\"Entity\/User.php.html#26\">User<\/a>"],[100,8,"<a href=\"Form\/CompanyFormType.php.html#13\">CompanyFormType<\/a>"],[100,8,"<a href=\"Form\/ContactDetailFormType.php.html#14\">ContactDetailFormType<\/a>"],[100,8,"<a href=\"Form\/ContactFormType.php.html#18\">ContactFormType<\/a>"],[100,2,"<a href=\"Form\/Type\/GenderType.php.html#15\">GenderType<\/a>"],[100,10,"<a href=\"Form\/UserType.php.html#17\">UserType<\/a>"],[0,1,"<a href=\"Handler\/ExceptionWrapperHandler.php.html#13\">ExceptionWrapperHandler<\/a>"],[100,5,"<a href=\"Handler\/RequestHandler.php.html#13\">RequestHandler<\/a>"],[100,2,"<a href=\"Security\/AuthenticationSuccessHandler.php.html#19\">AuthenticationSuccessHandler<\/a>"],[85.714285714286,11,"<a href=\"Security\/CompanyContactVoter.php.html#20\">CompanyContactVoter<\/a>"],[0,2,"<a href=\"Utils\/FileUploader.php.html#8\">FileUploader<\/a>"],[100,2,"<a href=\"Validator\/Constraints\/ContactDetailType.php.html#17\">ContactDetailType<\/a>"],[100,10,"<a href=\"Validator\/Constraints\/ContactDetailValidator.php.html#22\">ContactDetailValidator<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,5,"<a href=\"Controller\/BaseController.php.html#11\">BaseController::getFormErrors<\/a>"],[100,1,"<a href=\"Controller\/CompanyContactController.php.html#62\">CompanyContactController::indexAction<\/a>"],[100,3,"<a href=\"Controller\/CompanyContactController.php.html#119\">CompanyContactController::newAction<\/a>"],[100,1,"<a href=\"Controller\/CompanyContactController.php.html#179\">CompanyContactController::showAction<\/a>"],[100,4,"<a href=\"Controller\/CompanyContactController.php.html#235\">CompanyContactController::editAction<\/a>"],[100,4,"<a href=\"Controller\/CompanyContactController.php.html#295\">CompanyContactController::deleteContactAction<\/a>"],[100,3,"<a href=\"Controller\/CompanyContactDetailsController.php.html#66\">CompanyContactDetailsController::newAction<\/a>"],[100,1,"<a href=\"Controller\/CompanyContactDetailsController.php.html#126\">CompanyContactDetailsController::showAction<\/a>"],[100,4,"<a href=\"Controller\/CompanyContactDetailsController.php.html#181\">CompanyContactDetailsController::editAction<\/a>"],[100,4,"<a href=\"Controller\/CompanyContactDetailsController.php.html#247\">CompanyContactDetailsController::deleteContactAction<\/a>"],[100,1,"<a href=\"Controller\/CompanyController.php.html#63\">CompanyController::indexAction<\/a>"],[100,3,"<a href=\"Controller\/CompanyController.php.html#115\">CompanyController::newAction<\/a>"],[100,1,"<a href=\"Controller\/CompanyController.php.html#175\">CompanyController::showAction<\/a>"],[100,3,"<a href=\"Controller\/CompanyController.php.html#219\">CompanyController::editAction<\/a>"],[100,3,"<a href=\"Controller\/CompanyController.php.html#271\">CompanyController::deleteCompanyAction<\/a>"],[100,3,"<a href=\"Controller\/CompanyController.php.html#336\">CompanyController::deleteCompanyContactAction<\/a>"],[100,1,"<a href=\"Controller\/UserController.php.html#62\">UserController::indexAction<\/a>"],[100,4,"<a href=\"Controller\/UserController.php.html#125\">UserController::newAction<\/a>"],[100,1,"<a href=\"Controller\/UserController.php.html#195\">UserController::showAction<\/a>"],[100,5,"<a href=\"Controller\/UserController.php.html#248\">UserController::editAction<\/a>"],[100,3,"<a href=\"Controller\/UserController.php.html#327\">UserController::editUserAction<\/a>"],[100,3,"<a href=\"Controller\/UserController.php.html#384\">UserController::deleteAction<\/a>"],[100,1,"<a href=\"Entity\/Company.php.html#72\">Company::__construct<\/a>"],[100,1,"<a href=\"Entity\/Company.php.html#82\">Company::getId<\/a>"],[100,1,"<a href=\"Entity\/Company.php.html#94\">Company::setName<\/a>"],[100,1,"<a href=\"Entity\/Company.php.html#106\">Company::getName<\/a>"],[100,1,"<a href=\"Entity\/Company.php.html#118\">Company::setDescription<\/a>"],[100,1,"<a href=\"Entity\/Company.php.html#130\">Company::getDescription<\/a>"],[0,1,"<a href=\"Entity\/Company.php.html#142\">Company::addContact<\/a>"],[100,1,"<a href=\"Entity\/Company.php.html#155\">Company::removeContact<\/a>"],[0,1,"<a href=\"Entity\/Company.php.html#165\">Company::getContacts<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#147\">Contact::__construct<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#157\">Contact::getId<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#169\">Contact::setFirstName<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#181\">Contact::getFirstName<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#193\">Contact::setLastName<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#205\">Contact::getLastName<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#217\">Contact::setJobTitle<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#229\">Contact::getJobTitle<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#241\">Contact::setGender<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#253\">Contact::getGender<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#265\">Contact::setBirthDate<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#277\">Contact::getBirthDate<\/a>"],[0,1,"<a href=\"Entity\/Contact.php.html#289\">Contact::setImage<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#301\">Contact::getImage<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#313\">Contact::setCompany<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#325\">Contact::getCompany<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#337\">Contact::setEditableAll<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#349\">Contact::getEditableAll<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#361\">Contact::addContactDetail<\/a>"],[0,1,"<a href=\"Entity\/Contact.php.html#374\">Contact::removeContactDetail<\/a>"],[100,1,"<a href=\"Entity\/Contact.php.html#384\">Contact::getContactDetails<\/a>"],[100,1,"<a href=\"Entity\/ContactDetail.php.html#71\">ContactDetail::getId<\/a>"],[100,1,"<a href=\"Entity\/ContactDetail.php.html#83\">ContactDetail::setType<\/a>"],[100,1,"<a href=\"Entity\/ContactDetail.php.html#95\">ContactDetail::getType<\/a>"],[100,1,"<a href=\"Entity\/ContactDetail.php.html#107\">ContactDetail::setValue<\/a>"],[100,1,"<a href=\"Entity\/ContactDetail.php.html#119\">ContactDetail::getValue<\/a>"],[100,1,"<a href=\"Entity\/ContactDetail.php.html#131\">ContactDetail::setContact<\/a>"],[0,1,"<a href=\"Entity\/ContactDetail.php.html#143\">ContactDetail::getContact<\/a>"],[100,6,"<a href=\"Entity\/Repository\/CompanyRepository.php.html#16\">CompanyRepository::search<\/a>"],[100,2,"<a href=\"Entity\/Repository\/ContactRepository.php.html#14\">ContactRepository::search<\/a>"],[89.74358974359,16,"<a href=\"Entity\/Repository\/UserRepository.php.html#11\">UserRepository::search<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#43\">User::__construct<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#177\">User::setFirstName<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#189\">User::getFirstName<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#201\">User::setLastName<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#213\">User::getLastName<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#225\">User::setGender<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#237\">User::getGender<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#249\">User::setBirthDate<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#261\">User::getBirthDate<\/a>"],[100,3,"<a href=\"Form\/CompanyFormType.php.html#19\">CompanyFormType::buildForm<\/a>"],[100,3,"<a href=\"Form\/CompanyFormType.php.html#25\">CompanyFormType::anonymous function<\/a>"],[100,1,"<a href=\"Form\/CompanyFormType.php.html#46\">CompanyFormType::configureOptions<\/a>"],[100,1,"<a href=\"Form\/CompanyFormType.php.html#57\">CompanyFormType::getBlockPrefix<\/a>"],[100,3,"<a href=\"Form\/ContactDetailFormType.php.html#20\">ContactDetailFormType::buildForm<\/a>"],[100,3,"<a href=\"Form\/ContactDetailFormType.php.html#26\">ContactDetailFormType::anonymous function<\/a>"],[100,1,"<a href=\"Form\/ContactDetailFormType.php.html#50\">ContactDetailFormType::configureOptions<\/a>"],[100,1,"<a href=\"Form\/ContactDetailFormType.php.html#61\">ContactDetailFormType::getBlockPrefix<\/a>"],[100,3,"<a href=\"Form\/ContactFormType.php.html#24\">ContactFormType::buildForm<\/a>"],[100,3,"<a href=\"Form\/ContactFormType.php.html#30\">ContactFormType::anonymous function<\/a>"],[100,1,"<a href=\"Form\/ContactFormType.php.html#83\">ContactFormType::configureOptions<\/a>"],[100,1,"<a href=\"Form\/ContactFormType.php.html#94\">ContactFormType::getBlockPrefix<\/a>"],[100,1,"<a href=\"Form\/Type\/GenderType.php.html#17\">GenderType::configureOptions<\/a>"],[100,1,"<a href=\"Form\/Type\/GenderType.php.html#24\">GenderType::getParent<\/a>"],[100,1,"<a href=\"Form\/UserType.php.html#21\">UserType::__construct<\/a>"],[100,4,"<a href=\"Form\/UserType.php.html#30\">UserType::buildForm<\/a>"],[100,3,"<a href=\"Form\/UserType.php.html#36\">UserType::anonymous function<\/a>"],[100,1,"<a href=\"Form\/UserType.php.html#109\">UserType::configureOptions<\/a>"],[100,1,"<a href=\"Form\/UserType.php.html#120\">UserType::getBlockPrefix<\/a>"],[0,1,"<a href=\"Handler\/ExceptionWrapperHandler.php.html#15\">ExceptionWrapperHandler::wrap<\/a>"],[100,5,"<a href=\"Handler\/RequestHandler.php.html#16\">RequestHandler::handle<\/a>"],[100,1,"<a href=\"Security\/AuthenticationSuccessHandler.php.html#35\">AuthenticationSuccessHandler::__construct<\/a>"],[100,1,"<a href=\"Security\/AuthenticationSuccessHandler.php.html#44\">AuthenticationSuccessHandler::onAuthenticationSuccess<\/a>"],[100,1,"<a href=\"Security\/CompanyContactVoter.php.html#30\">CompanyContactVoter::__construct<\/a>"],[80,3,"<a href=\"Security\/CompanyContactVoter.php.html#35\">CompanyContactVoter::supports<\/a>"],[81.818181818182,5,"<a href=\"Security\/CompanyContactVoter.php.html#49\">CompanyContactVoter::voteOnAttribute<\/a>"],[100,2,"<a href=\"Security\/CompanyContactVoter.php.html#83\">CompanyContactVoter::canEdit<\/a>"],[0,1,"<a href=\"Utils\/FileUploader.php.html#12\">FileUploader::__construct<\/a>"],[0,1,"<a href=\"Utils\/FileUploader.php.html#17\">FileUploader::upload<\/a>"],[100,1,"<a href=\"Validator\/Constraints\/ContactDetailType.php.html#22\">ContactDetailType::getTargets<\/a>"],[100,1,"<a href=\"Validator\/Constraints\/ContactDetailType.php.html#27\">ContactDetailType::validatedBy<\/a>"],[100,1,"<a href=\"Validator\/Constraints\/ContactDetailValidator.php.html#28\">ContactDetailValidator::__construct<\/a>"],[100,9,"<a href=\"Validator\/Constraints\/ContactDetailValidator.php.html#35\">ContactDetailValidator::validate<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>
