@@ -25,4 +25,18 @@ class CommonFunctionsTest extends BaseTestController
         $this->assertInternalType('object', $response);
     }
 
+    /**
+     * test not found exception
+     */
+    public function testUnauthorizedException()
+    {
+
+        $this->client->setServerParameter('HTTP_Authorization', false);
+        $this->client->request('GET', '/api/contact/');
+        $response = json_decode($this->client->getResponse()->getContent());
+
+        $this->assertEquals(401, $this->client->getResponse()->getStatusCode());
+        $this->assertInternalType('object', $response);
+    }
+
 }
