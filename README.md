@@ -35,4 +35,4 @@ What you can:
   - CRUD commands for company
   - search for a company
 
-######Please note: this is only a server, you need your client to use it.
+######Please note: this is only a server, you need your [client](https://github.com/qweluke/WizardCRM) to use it.
